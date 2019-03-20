@@ -1,0 +1,17 @@
+<div class="container">
+  <div *ngIf="songs">
+    <div class="row">
+      <div class="card col-3" style="width: 18rem;" *ngFor="let song of songs" [routerLink]="['/listensong', song.id]">
+        <img height="200px" src="{{ BaseURL + song.image }}" alt={{song.name}}>
+          <h1>{{song.name | uppercase}}</h1>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="songs || songErrMsg">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div fxFlex *ngIf="songErrMsg">
+    <h2>Error</h2>
+    <h4>{{songErrMsg}}</h4>
+  </div>
+</div>

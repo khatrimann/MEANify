@@ -1,0 +1,55 @@
+import { Location } from '@angular/common';
+import { UserService } from './../services/user.service';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../services/auth.service';
+import { User } from '../shared/user';
+import { Subscription } from 'rxjs/Subscription';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
+})
+
+export class LoginComponent implements OnInit {
+
+
+  username: string = undefined;
+  id: string = undefined;
+  isloggedin: Boolean;
+  subscription: Subscription;
+  // user: User;
+  user = {username: '', password: '', remember: false};
+  errMess: string;
+
+  constructor(private authService: AuthService,
+    private router: Router, private location: Location,
+    private userService: UserService) {}
+
+  ngOnInit() {
+
+  }
+
+    onSubmit() {
+    console.log('User: ', this.user);
+    this.authService.logIn(this.user)
+      .subscribe(res => {
+        if (res.success) {
+          console.log(res.success);
+          this.user.username = '';
+          this.user.password = '';
+          this.user.remember = false;
+        } else {
+          console.log(res);
+        }
+      },
+      error => {
+        console.log(error);
+        this.errMess = error;
+      });
+      this.router.navigate(['/users']);
+
+  }
+
+}

@@ -1,0 +1,3 @@
+[submodule "MEANify-ng"]
+	path = MEANify-ng
+	url = https://github.com/khatrimann/MEANify.git
