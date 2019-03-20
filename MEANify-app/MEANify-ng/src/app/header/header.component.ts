@@ -13,10 +13,10 @@ import { Subject } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnChanges {
+export class HeaderComponent implements OnInit {
 
   username: string = undefined;
-  id: Subject<string> = undefined;
+  id: Subscription;
   isloggedin: Boolean;
   subscriptionUser: Subscription;
   subscriptionId: Subscription;
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.authService.loadUserCredentials();
     this.subscriptionUser = this.authService.getUsername()
       .subscribe(name => { console.log(name); this.username = name; });
-      this.id = this.authService.id;
+      this.subscriptionId = this.authService.getUserId().subscribe(id => {console.log(id); this.id = id; });
       console.log('Retrieved [form header] ' + this.id);
      }
 
@@ -40,14 +40,4 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.username = undefined;
     this.authService.logOut();
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('invoked');
-    this.authService.loadUserCredentials();
-    this.subscriptionUser = this.authService.getUsername()
-      .subscribe(name => { console.log(name); this.username = name; });
-      this.id = this.authService.id;
-      console.log('Retrieved [form header] ' + this.id);
-  }
-
 }

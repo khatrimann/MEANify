@@ -16,9 +16,10 @@ export class LoginComponent implements OnInit {
 
 
   username: string = undefined;
-  id: string = undefined;
+  id: Subscription;
   isloggedin: Boolean;
   subscription: Subscription;
+  subscriptionId: Subscription;
   // user: User;
   user = {username: '', password: '', remember: false};
   errMess: string;
@@ -48,7 +49,8 @@ export class LoginComponent implements OnInit {
         console.log(error);
         this.errMess = error;
       });
-      this.router.navigate(['/users']);
+      this.subscriptionId =  this.authService.getUserId().subscribe(id => {console.log(id); this.id = id; });
+      //this.router.navigate(['/users', this.id]);
 
   }
 

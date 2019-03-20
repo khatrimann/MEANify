@@ -54,12 +54,12 @@ export class AuthService {
      this.username.next(name);
    }
 
-   clearUsername() {
-     this.username.next(undefined);
+   sendId(id: string) {
+     this.id.next(id);
    }
 
-   sendId(id: string) {
-      this.id.next(id);
+   clearUsername() {
+     this.username.next(undefined);
    }
 
    loadUserCredentials() {
@@ -126,6 +126,18 @@ export class AuthService {
    getToken(): string {
      return this.authToken;
    }
+
+   getUserId(): Observable<any> {
+     if (this.authToken) {
+    const helper = new JwtHelperService();
+    console.log(helper.decodeToken(this.authToken));
+    this.id = helper.decodeToken(this.authToken)._id;
+    console.log('id is [getUserId()] ' + this.id);
+    return this.id.asObservable();
+   } else {
+   return this.id.asObservable();
+  }
+}
 
 }
 
