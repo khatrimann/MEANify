@@ -127,17 +127,17 @@ export class AuthService {
      return this.authToken;
    }
 
-   getUserId(): Observable<any> {
-     if (this.authToken) {
-    const helper = new JwtHelperService();
-    console.log(helper.decodeToken(this.authToken));
-    this.id = helper.decodeToken(this.authToken)._id;
-    console.log('id is [getUserId()] ' + this.id);
-    return this.id.asObservable();
-   } else {
-   return this.id.asObservable();
-  }
-}
+  //  getUserId(): Observable<any> {
+  //    if (this.authToken) {
+  //   const helper = new JwtHelperService();
+  //   console.log(helper.decodeToken(this.authToken));
+  //   this.id = helper.decodeToken(this.authToken)._id;
+  //   console.log('id is [getUserId()] ' + this.id);
+  //   return this.id.asObservable();
+  //  } else {
+  //  return this.id.asObservable();
+  // }
+// }
 
 }
 

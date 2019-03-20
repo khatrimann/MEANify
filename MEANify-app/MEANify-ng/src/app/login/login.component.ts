@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../services/auth.service';
 import { User } from '../shared/user';
 import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
   // user: User;
   user = {username: '', password: '', remember: false};
   errMess: string;
+  id2: Subject<string> = undefined;
 
   constructor(private authService: AuthService,
     private router: Router, private location: Location,
@@ -49,8 +52,10 @@ export class LoginComponent implements OnInit {
         console.log(error);
         this.errMess = error;
       });
-      this.subscriptionId =  this.authService.getUserId().subscribe(id => {console.log(id); this.id = id; });
-      //this.router.navigate(['/users', this.id]);
+      // this.subscriptionId =  this.authService.getUserId().subscribe(id => {console.log(id); this.id = id; });
+      this.id2 = this.authService.id;
+      console.log(this.id2);
+      this.router.navigate(['/users', this.id2]);
 
   }
 
