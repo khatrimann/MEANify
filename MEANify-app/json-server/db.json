@@ -1,0 +1,188 @@
+{
+    "songs": [
+        {
+            "id": 1,
+            "name": "song1",
+            "artist": "artist1",
+            "year": 2019,
+            "genre": "pop",
+            "uploadedby": "user1",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 1",
+                    "user": "someone 1 song 1",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 1",
+                    "user": "someone 2 song 1",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "song2",
+            "artist": "artist2",
+            "year": 2019,
+            "genre": "rock",
+            "uploadedby": "user2",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 2",
+                    "user": "someone 1 song 2",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 2",
+                    "user": "someone 2 song 2",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "song3",
+            "artist": "artist3",
+            "year": 2019,
+            "genre": "jazz",
+            "uploadedby": "user3",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 3",
+                    "user": "someone 1 song 3",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 3",
+                    "user": "someone 2 song 3",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "song4",
+            "artist": "artist4",
+            "year": 2019,
+            "genre": "pop",
+            "uploadedby": "user4",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 4",
+                    "user": "someone 1 song 4",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 4",
+                    "user": "someone 2 song 4",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "song5",
+            "artist": "artist5",
+            "year": 2019,
+            "genre": "rock",
+            "uploadedby": "user5",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 5",
+                    "user": "someone 1 song 5",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 5",
+                    "user": "someone 2 song 5",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "song6",
+            "artist": "artist6",
+            "year": 2019,
+            "genre": "jazz",
+            "uploadedby": "user3",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 6",
+                    "user": "someone 1 song 6",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 6",
+                    "user": "someone 2 song 6",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "name": "song7",
+            "artist": "artist7",
+            "year": 2019,
+            "genre": "jazz",
+            "uploadedby": "user7",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 7",
+                    "user": "someone 1 song 7",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 7",
+                    "user": "someone 2 song 7",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "name": "song8",
+            "artist": "artist8",
+            "year": 2019,
+            "genre": "jazz",
+            "uploadedby": "user8",
+            "location": "songs/beethoven.mp3",
+            "comments": [
+                {
+                    "rating": 5,
+                    "comment": "comment 1 song 8",
+                    "user": "someone 1 song 8",
+                    "date": "2012-10-16T17:57:28.556094Z"   
+                },
+                {
+                    "rating": 4,
+                    "comment": "comment 2 song 3",
+                    "user": "someone 2 song 3",
+                    "date": "2012-10-16T17:57:28.556094Z"
+                }
+            ]
+        }
+    ]
+}
