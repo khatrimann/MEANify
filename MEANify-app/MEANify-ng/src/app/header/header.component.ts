@@ -36,6 +36,9 @@ export class HeaderComponent implements OnInit {
      }
 
   ngOnInit() {
+    // this.authService.loadUserCredentials();
+    this.id2 = this.authService.id;
+      console.log('Retrieved [form header] ' + this.id2);
   }
 
   onLogout() {

@@ -12,6 +12,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var playlistRouter = require('./routes/playlistRouter');
 var homeRouter = require('./routes/homeRouter');
+var uploadRouter = require('./routes/uploadRouter');
 
 
 const url = config.mongoUrl;
@@ -46,6 +47,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/playlists', playlistRouter);
 app.use('/songs', homeRouter);
+app.use('/upload', uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

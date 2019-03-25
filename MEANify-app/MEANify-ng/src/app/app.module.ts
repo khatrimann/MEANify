@@ -39,6 +39,7 @@ import { ListensongComponent } from './listensong/listensong.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UploadComponent } from './upload/upload.component';
 
 
 
@@ -52,7 +53,8 @@ import { ProfileComponent } from './profile/profile.component';
     ListensongComponent,
     HeaderComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,

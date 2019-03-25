@@ -31,7 +31,7 @@ const playlistSchema = new Schema({
         required: true,
     },
     image: {
-        type: string,
+        type: String,
         required: true
     },
     createddby: {

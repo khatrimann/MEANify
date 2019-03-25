@@ -10,12 +10,15 @@
         <a class="nav-link" [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" *ngIf="username" [routerLink]="['/users', id]">{{username | titlecase}}</a>
+          <a class="nav-link" *ngIf="username" [routerLink]="['/users', id2]">{{username | titlecase}}</a>
       </li>
       <li class="nav-item">
           <a class="nav-link" *ngIf="username" (click)="onLogout()" id="logout">Logout</a>
           <a class="nav-link" data-toggle="modal" data-target="#myModal" *ngIf="!username">Login</a>
       </li>
+      <li class="nav-item" *ngIf="username">
+        <a class="nav-link" [routerLink]="['/upload']" id="upload">Upload</a>
+    </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

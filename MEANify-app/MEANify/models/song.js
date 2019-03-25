@@ -31,14 +31,14 @@ const songSchema = new Schema({
         required: true,
     },
     year: {
-        type: String,
+        type: Number,
         required: true,
     },
     genre: {
         type: String,
         required: true,
     },
-    uplaodedby: {
+    uploadedby: {
         type: String,
         required: true,
     },
