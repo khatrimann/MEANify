@@ -1,0 +1,55 @@
+<!-- <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+
+<button type="button" class="btn btn-success btn-s"
+  (click)="uploader.uploadAll()"
+  [disabled]="!uploader.getNotUploadedItems().length" >
+      Upload an Image
+</button> -->
+
+<h4>Welcome to !</h4>
+<mat-card>
+      <form [formGroup]="uploadForm" (ngSubmit)="uploadSubmit()">
+        <mat-card-content>
+          <input formControlName="document" type="file" ng2FileSelect accept="image/*" [uploader]="uploader" name="imageFile" multiple/><br/>
+          <br>
+          <div class="drop-zone">
+          <div ng2FileDrop [uploader]="uploader" class="drop-zone" name="imageFile">
+             Drag and drop files to upload
+          </div>
+          </div>
+          <table>
+            <thead>
+            <tr>
+              <th width="5%">
+                  Index
+              </th>
+              <th width="85%">
+                File Name
+              </th>
+              <th width="10%">
+                Remove
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of uploader.queue">
+              <th width="90%">
+                ({{uploader.queue.indexOf(item)}} {{item.file.name}} {{item.file.size}} kB)
+              </th>
+              <th class="text-center" width="10%">
+                <mat-icon (click)="ppath.splice(uploader.queue.indexOf(item), 1); item.remove();">delete</mat-icon>
+              </th>
+            </tr>
+            </tbody>
+          </table>
+          <br>
+          <button mat-raised-button color="accent" [disabled]="!uploadForm.valid" type="submit">Upload Data</button>
+        </mat-card-content>
+      </form>
+
+      <div *ngIf="ppath">
+        <div *ngFor="let path of ppath">
+        <img [src]="path" *ngIf="path"/>
+        </div>
+      </div>
+</mat-card>
