@@ -14,7 +14,7 @@
         </div>
 
         <div class="col py-2">
-          <button mat-raised-button color="accent" [disabled]="!uploader.queue.length || uploader.queue.length < 6" type="submit">Upload Data</button>
+          <button mat-raised-button color="accent" [disabled]="!uploader.queue.length || uploader.queue.length >= 6 || warning" type="submit">Upload Data</button>
         </div>
 
     </div>
@@ -24,6 +24,16 @@
         <div class="progress">
             <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploadPercentage+ '%' }"  aria-valuemin="0" aria-valuemax="100"></div>
         </div>
+    </div>
+
+    <div>
+      <div *ngIf="warning">
+        <p>Limit size Exceeded than 10MB of one or more files</p>
+      </div>
+
+      <div *ngIf="limitWarning">
+        <p class="alert alert-warning">*Queue Full, items should be less than or equal to 5</p>
+      </div>
     </div>
 
     <div class="row" *ngIf="ppath">
@@ -55,6 +65,7 @@
           </td>
           <td width="85%">
             {{item.file.name}} ({{item.file.size}} kB)
+            <p *ngIf="item.file.size > 10000000" class="alert alert-warning">File size is greater than 10MB</p>
           </td>
           <td class="text-center" width="10%">
             <mat-icon (click)="ppath.splice(uploader.queue.indexOf(item), 1); item.remove();">delete</mat-icon>

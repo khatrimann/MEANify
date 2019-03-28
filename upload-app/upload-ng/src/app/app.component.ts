@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   pathimg: string;
   public uploadPercentage = 0;
   ppath: SafeUrl[] = [];
+  warning = false;
+  limitWarning = false;
 
   public uploader: FileUploader = new FileUploader({
     isHTML5: true,
@@ -26,7 +28,18 @@ export class AppComponent implements OnInit {
 
   title = 'Angular File Upload';
   constructor(private fb: FormBuilder, private http: HttpClient, private sanitizer: DomSanitizer ) {
+
     this.uploader.onAfterAddingFile = (fileItem) => {
+      if (fileItem._file.size > 10000000) {
+        this.warning = true;
+      } else {
+        this.warning = false;
+      }
+      if (this.uploader.queue.length >= 6) {
+        this.limitWarning = true;
+      } else {
+        this.limitWarning = false;
+      }
       this.filePreviewPath  = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(fileItem._file)));
       this.ppath.push(this.filePreviewPath);
     };
