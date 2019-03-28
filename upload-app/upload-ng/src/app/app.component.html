@@ -9,18 +9,18 @@
 
     <div class="row">
 
-        <div class="col py-2">
-          <input formControlName="document" type="file" ng2FileSelect accept="image/*" [uploader]="uploader" name="imageFile" multiple/><br/>
+        <div class="col py-2" >
+          <input formControlName="document" *ngIf="uploader.queue.length <6" type="file" ng2FileSelect accept="image/*" [uploader]="uploader" name="imageFile" multiple/><br/>
         </div>
 
         <div class="col py-2">
-          <button mat-raised-button color="accent" [disabled]="!uploader.queue.length" type="submit">Upload Data</button>
+          <button mat-raised-button color="accent" [disabled]="!uploader.queue.length || uploader.queue.length < 6" type="submit">Upload Data</button>
         </div>
 
     </div>
 
     <div>
-        Queue progress ({{uploadPercentage+'%'}}):
+        Upload progress ({{uploadPercentage+'%'}}):
         <div class="progress">
             <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploadPercentage+ '%' }"  aria-valuemin="0" aria-valuemax="100"></div>
         </div>

@@ -22,7 +22,7 @@ margin: auto;
   background-color: rgba(0, 128 , 128, 0.4)
 }
 
-.table th {
+.table, .th, .td {
   text-align: center;
 }
 
