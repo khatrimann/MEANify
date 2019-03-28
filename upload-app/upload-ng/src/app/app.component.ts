@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {  FileUploader, FileSelectDirective, FileUploadModule, FileItem } from 'ng2-file-upload/ng2-file-upload';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse, HttpEventType, HttpEvent} from "@angular/common/http";
 import { DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import { ElementRef } from '@angular/core'
+import { ElementRef } from '@angular/core';
+import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit {
   uploadForm: FormGroup;
   public filePreviewPath: SafeUrl;
   pathimg: string;
+  public uploadPercentage = 0;
   ppath: SafeUrl[] = [];
 
   public uploader: FileUploader = new FileUploader({
@@ -30,12 +32,12 @@ export class AppComponent implements OnInit {
     };
    }
 
-  uploadSubmit(){
+  uploadSubmit() {
         for (let i = 0; i < this.uploader.queue.length; i++) {
           let fileItem = this.uploader.queue[i]._file;
           console.log(fileItem);
-          if(fileItem.size > 10000000){
-            alert("Each File should be less than 10 MB of size.");
+          if (fileItem.size > 10000000){
+            alert('Each File should be less than 10 MB of size.');
             return;
           }
         }
@@ -46,14 +48,32 @@ export class AppComponent implements OnInit {
           data.append('imageFile', fileItem);
           data.append('fileSeq', 'seq'+j);
           data.append( 'dataType', this.uploadForm.controls.type.value);
-          this.uploadFile(data).subscribe(data => alert(data.message));
+          this.uploadFile(data).subscribe(event => {
+            console.log(event);
+            if (event.type == HttpEventType.UploadProgress) {
+            console.log('uplaod progress');
+            const percentage = Math.round(100 * event.loaded / event.total);
+            this.uploadPercentage = percentage;
+            console.log(percentage);
+            console.log(`file is ${percentage}% uploaded`);
+            } else if (event instanceof HttpResponse) {
+              console.log('File is completely uploaded');
+              setTimeout(() => {
+                this.uploadPercentage = 0;
+              }, 1000);
+            }
+          });
         }
         this.uploader.clearQueue();
+        this.ppath.splice(0, this.ppath.length);
+        // this.uploadPercentage = 0;
   }
 
-  uploadFile(data: FormData): Observable<any> {
+  uploadFile(data: FormData): Observable<any>{
     console.log(data);
-    return this.http.post('http://localhost:3000/upload', data);
+    return this.http.post<any>('http://localhost:3000/upload', data,  {
+      reportProgress: true, observe: 'events'
+     });
   }
 
   ngOnInit() {

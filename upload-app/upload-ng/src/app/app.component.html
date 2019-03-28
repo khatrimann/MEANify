@@ -1,55 +1,113 @@
-<!-- <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+<div class="conatiner-fluid mx-5 my-4">
 
-<button type="button" class="btn btn-success btn-s"
-  (click)="uploader.uploadAll()"
-  [disabled]="!uploader.getNotUploadedItems().length" >
-      Upload an Image
-</button> -->
+  <form [formGroup]="uploadForm" (ngSubmit)="uploadSubmit()">
 
-<h4>Welcome to !</h4>
-<mat-card>
-      <form [formGroup]="uploadForm" (ngSubmit)="uploadSubmit()">
-        <mat-card-content>
-          <input formControlName="document" type="file" ng2FileSelect accept="image/*" [uploader]="uploader" name="imageFile" multiple/><br/>
-          <br>
-          <div class="drop-zone">
-          <div ng2FileDrop [uploader]="uploader" class="drop-zone" name="imageFile">
-             Drag and drop files to upload
-          </div>
-          </div>
-          <table>
-            <thead>
-            <tr>
-              <th width="5%">
-                  Index
-              </th>
-              <th width="85%">
-                File Name
-              </th>
-              <th width="10%">
-                Remove
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of uploader.queue">
-              <th width="90%">
-                ({{uploader.queue.indexOf(item)}} {{item.file.name}} {{item.file.size}} kB)
-              </th>
-              <th class="text-center" width="10%">
-                <mat-icon (click)="ppath.splice(uploader.queue.indexOf(item), 1); item.remove();">delete</mat-icon>
-              </th>
-            </tr>
-            </tbody>
-          </table>
-          <br>
-          <button mat-raised-button color="accent" [disabled]="!uploadForm.valid" type="submit">Upload Data</button>
-        </mat-card-content>
-      </form>
-
-      <div *ngIf="ppath">
-        <div *ngFor="let path of ppath">
-        <img [src]="path" *ngIf="path"/>
-        </div>
+    <div class="row">
+      <div ng2FileDrop [uploader]="uploader" class="drop-zone" name="imageFile">
       </div>
-</mat-card>
+    </div>
+
+    <div class="row">
+
+        <div class="col py-2">
+          <input formControlName="document" type="file" ng2FileSelect accept="image/*" [uploader]="uploader" name="imageFile" multiple/><br/>
+        </div>
+
+        <div class="col py-2">
+          <button mat-raised-button color="accent" [disabled]="!uploader.queue.length" type="submit">Upload Data</button>
+        </div>
+
+    </div>
+
+    <div>
+        Queue progress ({{uploadPercentage+'%'}}):
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploadPercentage+ '%' }"  aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="ppath">
+      <div *ngFor="let path of ppath" class="col-md-2">
+        <img [src]="path" *ngIf="path" class="thumbs"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col" width="5%">
+              Index
+          </th>
+          <th scope="col" width="85%">
+            File Name
+          </th>
+          <th scope="col" width="10%">
+            Remove
+          </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let item of uploader.queue">
+          <td scope="row" width="5%">
+              {{uploader.queue.indexOf(item) + 1}}
+          </td>
+          <td width="85%">
+            {{item.file.name}} ({{item.file.size}} kB)
+          </td>
+          <td class="text-center" width="10%">
+            <mat-icon (click)="ppath.splice(uploader.queue.indexOf(item), 1); item.remove();">delete</mat-icon>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </form>
+
+</div>
+
+
+<!-- Code that can be used -->
+
+<!-- <mat-card-content>
+
+    <br>
+
+    <table>
+      <thead>
+      <tr>
+        <th width="5%">
+            Index
+        </th>
+        <th width="85%">
+          File Name
+        </th>
+        <th width="10%">
+          Remove
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of uploader.queue">
+        <th width="90%">
+          ({{uploader.queue.indexOf(item)}} {{item.file.name}} {{item.file.size}} kB)
+        </th>
+        <th class="text-center" width="10%">
+          <mat-icon (click)="ppath.splice(uploader.queue.indexOf(item), 1); item.remove();">delete</mat-icon>
+        </th>
+      </tr>
+      </tbody>
+    </table>
+    <br>
+
+  </mat-card-content>
+</form>
+
+<div *ngIf="ppath">
+  <div *ngFor="let path of ppath">
+  <img [src]="path" *ngIf="path"/>
+  </div>
+</div> -->
