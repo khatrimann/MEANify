@@ -9,7 +9,7 @@
 
 
     <div class="form-class">
-      <div formArrayName="entries" *ngFor="let cred of form.controls.entries?.value; let i = index">
+      <div formArrayName="entries" *ngFor="let cred of form.controls.entries?.value; let i = index; trackBy:trackByFn">
           <div>
         <ng-container [formGroupName]="i">
             <h3 class="py-3">Product {{ i+1 }}</h3>

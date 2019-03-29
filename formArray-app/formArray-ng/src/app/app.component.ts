@@ -43,4 +43,7 @@ export class AppComponent implements OnInit{
     this.pushService.pushData(values);
   }
 
+  trackByFn(index: any, item: any) {
+    return index;
+ }
 }
