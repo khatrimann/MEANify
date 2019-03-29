@@ -1,0 +1,15 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<form [formGroup]="form">
+    <h2>Product List</h2>
+    <button *ngIf="true" (click)="addCreds()">Add</button>
+    <button (click)="creds.removeAt(-1)">Remove</button>
+
+
+    <div formArrayName="entries" *ngFor="let creds of form.controls.entries?.value; let i = index">
+      <ng-container [formGroupName]="i">
+        <input placeholder="Product Name" formControlName="name">
+        <input placeholder="Product SKU" formControlName="sku">
+        <input placeholder="Product Quantity" formControlName="qty">
+      </ng-container>
+    </div>
+</form>
