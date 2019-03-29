@@ -1,22 +1,29 @@
-import { Component } from '@angular/core';
+import { Product } from './constants/product';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { PushService } from './services/push.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   form: FormGroup;
   limitExceeded = false;
   creds: FormArray;
+  response: Product[];
 
-  constructor(private fb: FormBuilder, private pushService: PushService) {
+  constructor(private fb: FormBuilder, private pushService: PushService){
     this.form = this.fb.group({
       entries: this.fb.array([]),
     });
     console.log(this.form.get('entries'));
+  }
+
+  ngOnInit() {
+    this.pushService.getData().subscribe(res => this.response = res);
   }
 
   addCreds() {
@@ -35,4 +42,5 @@ export class AppComponent {
     console.log(values);
     this.pushService.pushData(values);
   }
+
 }

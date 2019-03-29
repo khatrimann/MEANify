@@ -12,4 +12,10 @@
       <input placeholder="Product Quantity" formControlName="quantity">
     </ng-container>
   </div>
+
+  <div *ngIf="response">
+    <div *ngFor="let res of response">
+      {{res.name}} {{ res.SKU }} {{ res.quantity }}
+    </div>
+  </div>
 </form>
