@@ -1,21 +1,63 @@
-<form [formGroup]="form">
-  <h2>Product List</h2>
-  <button *ngIf="true" (click)="addCreds()">Add</button>
-  <button (click)="creds.removeAt(-1)">Remove</button>
-  <button (click)="showConsole()">Console</button>
+<div class="container">
+  <div class="row my-3">
+    <div class="col-4">
+  <form [formGroup]="form">
+    <h2>Product List</h2>
+    <button *ngIf="true" (click)="addCreds()">Add</button>
+    <button (click)="creds.removeAt(-1)">Remove</button>
+    <button (click)="showConsole()">Submit</button>
 
 
-  <div formArrayName="entries" *ngFor="let cred of form.controls.entries?.value; let i = index">
-    <ng-container [formGroupName]="i">
-      <input placeholder="Product Name" formControlName="name">
-      <input placeholder="Product SKU" formControlName="SKU">
-      <input placeholder="Product Quantity" formControlName="quantity">
-    </ng-container>
-  </div>
-
-  <div *ngIf="response">
-    <div *ngFor="let res of response">
-      {{res.name}} {{ res.SKU }} {{ res.quantity }}
+    <div class="form-class">
+      <div formArrayName="entries" *ngFor="let cred of form.controls.entries?.value; let i = index">
+          <div>
+        <ng-container [formGroupName]="i">
+            <h3>Product {{ i+1 }}</h3>
+            <div class="form-group">
+              <label for="name">Product Name:</label>
+              <input placeholder="Product Name" formControlName="name">
+            </div>
+            <div class="form-group">
+                <label for="SKU">SKU: </label>
+              <input placeholder="Product SKU" formControlName="SKU">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+              <input placeholder="Product Quantity" formControlName="quantity">
+            </div>
+            <hr>
+        </ng-container>
+      </div>
     </div>
   </div>
-</form>
+  </form>
+  </div>
+
+
+<!-- <div *ngIf="response">
+  <div *ngFor="let res of response">
+    {{res.name}} {{ res.SKU }} {{ res.quantity }}
+  </div>
+</div> -->
+
+<div class="col-8">
+
+
+<div class="row" *ngIf="response">
+  <div class="col" *ngFor="let res of response">
+    <div class="card" >
+      <div class="card-body">
+        <h4 class="card-title">{{ res.name}}</h4>
+        <h5 class="card-title">{{ res.SKU}}</h5>
+        <h6 class="card-title">{{ res._id}}</h6>
+        <p class="card-text">Qty.: {{ res.quantity }}</p>
+        <!-- <a class="btn btn-primary">Go somewhere</a> -->
+        <p class="text-info"><small>*This product may be subjected to copyright*</small></p>
+        <p class="text-info"><small>Creatded at: {{ res.createdAt }}</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
