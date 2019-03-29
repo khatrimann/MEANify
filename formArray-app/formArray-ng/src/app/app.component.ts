@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { PushService } from './services/push.service';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,11 @@ export class AppComponent {
   limitExceeded = false;
   creds: FormArray;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private pushService: PushService) {
     this.form = this.fb.group({
       entries: this.fb.array([]),
     });
+    console.log(this.form.get('entries'));
   }
 
   addCreds() {
@@ -22,9 +24,15 @@ export class AppComponent {
     if (this.creds.length <= 4) {
       this.creds.push(this.fb.group({
         name: '',
-        sku: '',
-        qty: ''
+        SKU: '',
+        quantity: '',
       }));
     }
+  }
+
+  showConsole() {
+    let values = this.form.get('entries').value;
+    console.log(values);
+    this.pushService.pushData(values);
   }
 }
