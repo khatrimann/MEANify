@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.pushService.getData().subscribe(res => this.response = res);
+    this.pushService.getData().subscribe(res => { this.response = res; console.log(this.response)});
   }
 
   addCreds() {

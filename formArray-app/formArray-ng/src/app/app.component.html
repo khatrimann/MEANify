@@ -12,7 +12,7 @@
       <div formArrayName="entries" *ngFor="let cred of form.controls.entries?.value; let i = index">
           <div>
         <ng-container [formGroupName]="i">
-            <h3>Product {{ i+1 }}</h3>
+            <h3 class="py-3">Product {{ i+1 }}</h3>
             <div class="form-group">
               <label for="name">Product Name:</label>
               <input placeholder="Product Name" formControlName="name">
@@ -53,7 +53,7 @@
         <p class="card-text">Qty.: {{ res.quantity }}</p>
         <!-- <a class="btn btn-primary">Go somewhere</a> -->
         <p class="text-info"><small>*This product may be subjected to copyright*</small></p>
-        <p class="text-info"><small>Creatded at: {{ res.createdAt }}</small></p>
+        <p class="text-info"><small>Creatded at: {{ res.createdAt || res.updatedAt }}</small></p>
       </div>
     </div>
   </div>
