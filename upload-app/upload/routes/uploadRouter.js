@@ -3,35 +3,15 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 var fs = require('fs');
 var mongoose = require("mongoose");
-var Grid = require('gridfs-stream');
 const config = require('../config');
 const async = require('async');
-const resizer = require('node-image-resizer');
-
-// var GridFS = Grid(mongoose.connection.db, mongoose.mongo);
-
-// function putFile(path, name, callback) {
-//     var writestream = GridFS.createWriteStream({
-//         filename: name
-//     });
-//     writestream.on('close', function (file) {
-//       callback(null, file);
-//     });
-//     fs.createReadStream(path).pipe(writestream);
-// }
-
-const storage = require('multer-gridfs-storage')({
-    url: config.mongoUrl,
-    file: (req, file) => {
-        return {
-          filename: file.originalname + '_' + Date.now()
-        };
-      },
- });
+const sharp = require('sharp');
+const Grid = require('gridfs-stream');
+Grid.mongo = mongoose.mongo;
 
 const storageLocal = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/images');
+        cb(null, 'public/images/original/');
     },
 
     filename: (req, file, cb) => {
@@ -39,26 +19,6 @@ const storageLocal = multer.diskStorage({
     }
 });
 
-const setup = { 
-    all: {
-      path: '../public/thumbnails/',
-      quality: 80
-    },
-    versions: [{
-      prefix: 'big_',
-      width: 1024,
-      height: 768
-    }, {
-      prefix: 'medium_',
-      width: 512,
-      height: 256
-    }, {
-      quality: 100,
-      prefix: 'small_',
-      width: 128,
-      height: 64
-    }]
-  };
 
 const imageFileFilter = (req, file, cb) => {
     if(!file.originalname.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
@@ -67,11 +27,8 @@ const imageFileFilter = (req, file, cb) => {
     cb(null, true);
 };
 
-const upload = multer({ storage: storage, fileFilter: imageFileFilter});
 const uploadLocal = multer({ storage: storageLocal, fileFilter: imageFileFilter});
 
-// upload.array('imageFile', 5),
-// upload.array('imageFile', 5),
 const uploadRouter = express.Router();
 
 uploadRouter.use(bodyParser.json());
@@ -83,23 +40,35 @@ uploadRouter.route('/')
 })
 .post(uploadLocal.array('imageFile', 5),  (req, res) => {
     // console.log(typeof(req.files[0].encoding));
-    for(let i=0;i<req.files.length;i++) {
-        console.log(req.files[i].originalname);
-    }
+    // for(let i=0;i<req.files.length;i++) {
+    //     console.log(req.files[i].originalname);
+    // }
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json(req.file);
     
-    //putFile()
-    // upload(req, res, function(err) {
-    //     if(err) {
-    //         console.log(err);
-    //     } else if(req.files){
-    //         (async() => {
-    //             await resizer('../public/images'+req.files[0].originalname, setup);
-    //         })();
-    //     }
-    // });
+    
+    console.log('calling async...');
+    async.forEachOf(req.files, (file) => {
+        var path_original = 'public/images/original/'+file.originalname;
+        var path_thumb = 'public/images/thumbnails/';
+        sharp(path_original)
+        .resize({ width: 100, height: 100 })
+        .toFile(path_thumb+'100/'+file.originalname, (err) => console.log(err));
+
+        sharp(path_original)
+        .resize({ width: 75, height: 75 })
+        .toFile(path_thumb+'75/'+file.originalname, (err) => console.log(err));
+
+        sharp(path_original)
+        .resize({ width: 125, height: 125 })
+        .toFile(path_thumb+'125/'+file.originalname, (err) => console.log(err));
+
+        var gfs = Grid(mongoose.connection.db);
+        var writestream = gfs.createWriteStream({filename: path_original});
+        fs.createReadStream(path_original).pipe(writestream);
+    });
+    
+    res.setHeader('Content-Type', 'application/json');
+    res.json(req.files);
 })
 .put( (req, res, next) => {
     res.statusCode = 403;

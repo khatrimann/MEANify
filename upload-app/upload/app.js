@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 var config = require('./config');
 
 var url = config.mongoUrl;
-mongoose.connect(url, { useMongoClient: true }).then((db) => { console.log("Successfully connected to " + db); }, (err) => { console.log(err); });
+mongoose.connect(url, { useMongoClient: true }).then((db) => { console.log("Successfully connected to " + db.connection.db.databaseName); }, (err) => { console.log(err); });
 
 var app = express();
 app.use(cors({ origin: true }));
@@ -28,11 +28,12 @@ app.use(function(req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//app.use(express.static('public/original/thumbnails/125/'));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
