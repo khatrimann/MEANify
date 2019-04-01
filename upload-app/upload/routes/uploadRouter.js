@@ -9,6 +9,7 @@ const sharp = require('sharp');
 const Grid = require('gridfs-stream');
 Grid.mongo = mongoose.mongo;
 
+
 const storageLocal = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/images/original/');
@@ -61,22 +62,25 @@ uploadRouter.route('/')
         sharp(path_original)
         .resize({ width: 125, height: 125 })
         .toFile(path_thumb+'125/'+file.originalname, (err) => console.log(err));
-
         var gfs = Grid(mongoose.connection.db);
         var writestream = gfs.createWriteStream({filename: path_original});
         fs.createReadStream(path_original).pipe(writestream);
     });
-    
+
     res.setHeader('Content-Type', 'application/json');
     res.json(req.files);
 })
 .put( (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /upload');
-})
-.delete( (req, res, next) => {
-    res.statusCode = 403;
-    res.end('DELETE operation not supported on /upload');
 });
+// .delete('/:id', (req, res, next) => {
+//     var gfs = Grid(mongoose.connection.db);
+
+//     gfs.remove({_id: req.params.id }, (err, gridStore) => {
+//         if (err) return handleError(err);
+//         console.log('success');
+//       });
+// });
 
 module.exports = uploadRouter;

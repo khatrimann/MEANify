@@ -1,3 +1,4 @@
+import { ImageService } from './services/image.service';
 import { Component, OnInit } from '@angular/core';
 import {  FileUploader, FileSelectDirective, FileUploadModule, FileItem } from 'ng2-file-upload/ng2-file-upload';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   ppath: SafeUrl[] = [];
   warning = false;
   limitWarning = false;
+  images: string[];
 
   public uploader: FileUploader = new FileUploader({
     isHTML5: true,
@@ -27,7 +29,7 @@ export class AppComponent implements OnInit {
   });
 
   title = 'Angular File Upload';
-  constructor(private fb: FormBuilder, private http: HttpClient, private sanitizer: DomSanitizer ) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private sanitizer: DomSanitizer, private imageService: ImageService ) {
 
     this.uploader.onAfterAddingFile = (fileItem) => {
       if (fileItem._file.size > 10000000) {
@@ -43,6 +45,8 @@ export class AppComponent implements OnInit {
       this.filePreviewPath  = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(fileItem._file)));
       this.ppath.push(this.filePreviewPath);
     };
+
+    this.imageService.getImages().subscribe(res => this.images = res);
    }
 
   uploadSubmit() {
@@ -100,6 +104,12 @@ export class AppComponent implements OnInit {
     console.log(this.ppath[index]);
     delete this.ppath[index];
   }
-
+  deleteImage(id: string, index: any) {
+    console.log(id);
+    console.log(index);
+    this.images.splice(index, 1);
+    console.log('deleting');
+    this.imageService.removeImage(id).subscribe(res => console.log(res));
+  }
 
 }

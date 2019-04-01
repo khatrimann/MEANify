@@ -78,9 +78,15 @@
 
   </form>
 
-  <!-- <div>
-    <img src="http://localhost:3000/images/imagees.jpeg">
-  </div> -->
+  <div *ngIf="images">
+    <div class="row">
+    <div class="card col mx-2" *ngFor="let image of images" style="max-width: 18rem;">
+        <div class="card-header">{{ image.name.slice(17, image.length) }}<button type="button" class="close" aria-label="Close" (click)="deleteImage(image.id, images.indexOf(image))">
+            <span aria-hidden="true">&times;</span>
+          </button></div>
+        <img src="http://localhost:3000/images{{image.name}}">
+    </div>
+  </div>
 
 </div>
 
