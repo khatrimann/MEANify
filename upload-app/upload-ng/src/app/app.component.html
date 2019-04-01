@@ -14,7 +14,7 @@
         </div>
 
         <div class="col py-2">
-          <button mat-raised-button color="accent" [disabled]="!uploader.queue.length || uploader.queue.length >= 6 || warning" type="submit">Upload Data</button>
+          <button mat-raised-button color="accent" [disabled]="uploader.queue.length < 3 || uploader.queue.length >5  || warning" type="submit">Upload Data</button>
         </div>
 
     </div>
