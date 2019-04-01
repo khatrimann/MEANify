@@ -3,33 +3,33 @@
     <div class="col-4">
   <form [formGroup]="form">
     <h2>Product List</h2>
-    <button *ngIf="true" (click)="addCreds()">Add</button>
-    <button (click)="creds.removeAt(-1)">Remove</button>
+    <button *ngIf="form.controls.entries.length <= 4" (click)="addCreds()">Add</button>
+    <button [disabled]="!form.controls.entries.length" (click)="form.get('entries').removeAt(-1)">Remove</button>
     <button (click)="showConsole()">Submit</button>
 
-
-    <div class="form-class">
-      <div formArrayName="entries" *ngFor="let cred of form.controls.entries?.value; let i = index; trackBy:trackByFn">
-          <div>
-        <ng-container [formGroupName]="i">
-            <h3 class="py-3">Product {{ i+1 }}</h3>
-            <div class="form-group">
-              <label for="name">Product Name:</label>
-              <input placeholder="Product Name" formControlName="name">
-            </div>
-            <div class="form-group">
-                <label for="SKU">SKU: </label>
-              <input placeholder="Product SKU" formControlName="SKU">
-            </div>
-            <div class="form-group">
-                <label for="quantity">Quantity:</label>
-              <input placeholder="Product Quantity" formControlName="quantity">
-            </div>
-            <hr>
-        </ng-container>
-      </div>
-    </div>
+  <div formArrayName="entries"
+  *ngFor="let item of form.get('entries').controls; let i = index;">
+  <div [formGroupName]="i">
+      <h3 class="py-3">Product {{ i+1 }}</h3>
+      <button type="button" class="close" aria-label="Close" (click)="removeProduct(i)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input placeholder="Product Name" formControlName="name">
+          </div>
+          <div class="form-group">
+              <label for="SKU">SKU: </label>
+            <input placeholder="Product SKU" formControlName="SKU">
+          </div>
+          <div class="form-group">
+              <label for="quantity">Quantity:</label>
+            <input placeholder="Product Quantity" formControlName="quantity">
+          </div>
+          <hr>
   </div>
+  </div>
+
   </form>
   </div>
 
@@ -46,6 +46,9 @@
 <div class="row" *ngIf="response">
   <div class="col" *ngFor="let res of response">
     <div class="card" >
+        <div class="card-header"><button type="button" class="close" aria-label="Close" (click)="removeProductfromDb(res._id)">
+            <span aria-hidden="true">&times;</span>
+          </button></div>
       <div class="card-body">
         <h4 class="card-title">{{ res.name}}</h4>
         <h5 class="card-title">{{ res.SKU}}</h5>

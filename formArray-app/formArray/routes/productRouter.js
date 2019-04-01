@@ -3,6 +3,7 @@ var router = express.Router();
 var Product = require('../models/product');
 
 
+
 router.get('/', function(req, res, next) {
     Product.find({}).
     then((formdata) => {
@@ -26,6 +27,13 @@ console.log("products : " +products);
     res.setHeader('Content-Type', 'application/json');
     res.json({msg: err});
   });
+});
+
+router.delete('/:id', (req, res, next) => {
+    Product.findByIdAndDelete({_id: req.params.id})
+    .then((err) => {
+        console.log(err);
+    });
 });
 
 module.exports = router;

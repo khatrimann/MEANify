@@ -14,6 +14,7 @@ export class AppComponent implements OnInit{
   limitExceeded = false;
   creds: FormArray;
   response: Product[];
+  entries: FormArray;
 
   constructor(private fb: FormBuilder, private pushService: PushService){
     this.form = this.fb.group({
@@ -27,9 +28,8 @@ export class AppComponent implements OnInit{
   }
 
   addCreds() {
-    this.creds = this.form.controls.entries as FormArray;
-    if (this.creds.length <= 4) {
-      this.creds.push(this.fb.group({
+    if ((<FormArray>this.form.get('entries')).length <= 4) {
+      (<FormArray>this.form.get('entries')).push(this.fb.group({
         name: '',
         SKU: '',
         quantity: '',
@@ -41,9 +41,29 @@ export class AppComponent implements OnInit{
     let values = this.form.get('entries').value;
     console.log(values);
     this.pushService.pushData(values);
+
+    for(var i=0;i<(<FormArray>this.form.get('entries')).length;i++) {
+      (<FormArray>this.form.get('entries')).removeAt(-1);
+    }
+
+    this.pushService.getData().subscribe(res => { this.response = res; console.log(this.response); });
   }
 
   trackByFn(index: any, item: any) {
     return index;
  }
+
+ removeProduct(index: number) {
+   console.log(index);
+   (<FormArray>this.form.get('entries')).removeAt(index);
+   let values = this.form.get('entries').value;
+    console.log(values);
+ }
+
+ removeProductfromDb(id: string) {
+   console.log(id);
+    this.pushService.removeProductfromDb(id);
+    this.pushService.getData().subscribe(res => { this.response = res; console.log(this.response); });
+ }
+
 }

@@ -20,4 +20,8 @@ export class PushService {
   getData(): Observable<Product[]> {
     return this.http.get<Product[]>(baseURL + 'products');
   }
+
+  removeProductfromDb(id: string) {
+    return this.http.delete<any>(baseURL + 'products/' + id).subscribe(res => console.log(res));
+  }
 }
