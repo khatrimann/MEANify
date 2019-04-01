@@ -1,6 +1,6 @@
 import { Product } from './constants/product';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { PushService } from './services/push.service';
 import { Subscription } from 'rxjs';
 
@@ -30,14 +30,14 @@ export class AppComponent implements OnInit{
   addCreds() {
     if ((<FormArray>this.form.get('entries')).length <= 4) {
       (<FormArray>this.form.get('entries')).push(this.fb.group({
-        name: '',
-        SKU: '',
-        quantity: '',
+        name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
+        SKU: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
+        quantity: [1, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
       }));
     }
   }
 
-  showConsole() {
+  submitProduct() {
     let values = this.form.get('entries').value;
     console.log(values);
     this.pushService.pushData(values);
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit{
     for(var i=0;i<(<FormArray>this.form.get('entries')).length;i++) {
       (<FormArray>this.form.get('entries')).removeAt(-1);
     }
-
+    this.form.reset();
     this.pushService.getData().subscribe(res => { this.response = res; console.log(this.response); });
   }
 
