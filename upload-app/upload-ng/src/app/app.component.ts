@@ -84,6 +84,8 @@ export class AppComponent implements OnInit {
         this.uploader.clearQueue();
         this.ppath.splice(0, this.ppath.length);
         // this.uploadPercentage = 0;
+        setTimeout(() => {this.imageService.getImages().subscribe(res => this.images = res)}, 2000);
+
   }
 
   uploadFile(data: FormData): Observable<any>{
