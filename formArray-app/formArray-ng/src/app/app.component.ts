@@ -36,7 +36,7 @@ export class AppComponent implements OnInit{
         quantity: [1, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
       }));
     }
-    console.log(this.form.get('entries').controls[0].controls.name.errors);
+    // console.log(this.form.get('entries').controls[0].controls.name.errors);
   }
 
   submitProduct() {
