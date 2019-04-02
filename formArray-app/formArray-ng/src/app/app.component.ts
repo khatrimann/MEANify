@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
     this.form = this.fb.group({
       entries: this.fb.array([]),
     });
-    console.log(this.form.get('entries'));
+    //console.log(this.form.get('entries'));
 
   }
 
@@ -31,12 +31,12 @@ export class AppComponent implements OnInit{
   addCreds() {
     if ((<FormArray>this.form.get('entries')).length <= 4) {
       (<FormArray>this.form.get('entries')).push(this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
-        SKU: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
+        name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(30)]],
+        SKU: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
         quantity: [1, [Validators.required, Validators.minLength(1), Validators.maxLength(30)]]
       }));
     }
-    // console.log(this.form.get('entries').controls[0].controls.name.errors);
+    console.log(this.form.get('entries').controls[0].controls.name);
   }
 
   submitProduct() {
