@@ -36,4 +36,14 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
+router.get('/:id', (req,res, next) => {
+    Product.findById({_id: req.params.id})
+    .then(product => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(product);
+    }, err => next(err))
+    .catch(err => next(err));
+});
+
 module.exports = router;

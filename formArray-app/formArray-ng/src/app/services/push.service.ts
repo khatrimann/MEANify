@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class PushService {
 
+  id: string;
   constructor(private http: HttpClient) { }
 
   pushData(form: any) {
@@ -23,5 +24,20 @@ export class PushService {
 
   removeProductfromDb(id: string) {
     return this.http.delete<any>(baseURL + 'products/' + id).subscribe(res => console.log(res));
+  }
+
+  getProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(baseURL + 'products/' + id);
+  }
+
+  setId(id: string) {
+    this.id = id;
+  }
+
+  getId() {
+    if (this.id) {
+      return this.id;
+    }
+    console.log('id is ' + this.id);
   }
 }
