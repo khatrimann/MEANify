@@ -1,3 +1,24 @@
-<div *ngIf="product">
-  {{ product.name }}
+<div class="container">
+
+  <div class="">
+    <form [formGroup]="updateForm">
+      <table>
+        <tr>
+          <td>Name: </td>
+          <td><input type="text" formControlName="name"></td>
+        </tr>
+
+        <tr>
+          <td>SKU: </td>
+          <td><input type="text" formControlName="SKU"></td>
+        </tr>
+
+        <tr>
+          <td>Qauntity: </td>
+          <td><input type="number" formControlName="qty"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
 </div>

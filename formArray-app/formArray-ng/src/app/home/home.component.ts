@@ -69,8 +69,4 @@ export class HomeComponent implements OnInit {
     this.pushService.getData().subscribe(res => { this.response = res; console.log(this.response); });
  }
 
- setId(id: string) {
-    this.pushService.setId(id);
- }
-
 }

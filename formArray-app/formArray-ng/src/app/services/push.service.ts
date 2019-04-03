@@ -29,15 +29,4 @@ export class PushService {
   getProduct(id: string): Observable<Product> {
     return this.http.get<Product>(baseURL + 'products/' + id);
   }
-
-  setId(id: string) {
-    this.id = id;
-  }
-
-  getId() {
-    if (this.id) {
-      return this.id;
-    }
-    console.log('id is ' + this.id);
-  }
 }
