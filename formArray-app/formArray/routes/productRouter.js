@@ -46,4 +46,16 @@ router.get('/:id', (req,res, next) => {
     .catch(err => next(err));
 });
 
+router.put('/:id', (req, res, next) => {
+    console.log("searching for "+req.params.id);
+    console.log(req.body);
+    Product.findByIdAndUpdate({_id: req.params.id}, req.body)
+    .then(product => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({success: true});
+    }, err => next(err))
+    .catch(err => next(err));
+});
+
 module.exports = router;

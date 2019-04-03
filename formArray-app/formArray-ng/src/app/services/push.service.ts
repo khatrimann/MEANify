@@ -29,4 +29,8 @@ export class PushService {
   getProduct(id: string): Observable<Product> {
     return this.http.get<Product>(baseURL + 'products/' + id);
   }
+
+  putData(id: string, form: any) {
+    return this.http.put<any>(baseURL + 'products/' + id, form);
+  }
 }

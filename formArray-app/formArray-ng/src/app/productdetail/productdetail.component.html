@@ -1,24 +1,51 @@
-<div class="container">
+<div class="container container-full">
+<h1 class="heading">Update Values</h1>
+  <div class="field-container">
+    <!-- <h4>Selected Product: {{ product._id }}</h4> -->
+    <div class="form-container">
+      <form [formGroup]="updateForm">
+        <table>
+          <tr>
+            <td>Name: </td>
+            <td><input type="text" formControlName="name"></td>
+            <td><div *ngIf="updateForm.controls['name'].errors">
+                <p *ngIf="updateForm.controls['name'].errors.required" class="alert alert-warning"><small>Error: Name is required</small></p>
+                <p *ngIf="updateForm.controls['name'].errors.minlength" class="alert alert-warning"><small>Error: Atleast 4 characters</small></p>
+                <p *ngIf="updateForm.controls['name'].errors.maxlength" class="alert alert-warning"><small>Error: Atmost 30 characters</small></p>
+            </div></td>
+          </tr>
 
-  <div class="">
-    <form [formGroup]="updateForm">
-      <table>
-        <tr>
-          <td>Name: </td>
-          <td><input type="text" formControlName="name"></td>
-        </tr>
+          <tr>
+            <td>SKU: </td>
+            <td><input type="text" formControlName="SKU"></td>
+            <td><div *ngIf="updateForm.controls['SKU'].errors">
+                <p *ngIf="updateForm.controls['SKU'].errors.required" class="alert alert-warning"><small>Error: SKU is required</small></p>
+                <p *ngIf="updateForm.controls['SKU'].errors.minlength" class="alert alert-warning"><small>Error: Atleast 4 characters</small></p>
+                <p *ngIf="updateForm.controls['SKU'].errors.maxlength" class="alert alert-warning"><small>Error: Atmost 30 characters</small></p>
+            </div></td>
+          </tr>
 
-        <tr>
-          <td>SKU: </td>
-          <td><input type="text" formControlName="SKU"></td>
-        </tr>
-
-        <tr>
-          <td>Qauntity: </td>
-          <td><input type="number" formControlName="qty"></td>
-        </tr>
-      </table>
-    </form>
+          <tr>
+            <td>Quantity: </td>
+            <td><input type="number" formControlName="quantity"></td>
+            <td><div *ngIf="updateForm.controls['quantity'].errors">
+                <p *ngIf="updateForm.controls['quantity'].errors.required" class="alert alert-warning"><small>Error: Quantity is required</small></p>
+                <p *ngIf="updateForm.controls['quantity'].errors.minlength" class="alert alert-warning"><small>Error: Atleast 4 characters</small></p>
+                <p *ngIf="updateForm.controls['quantity'].errors.maxlength" class="alert alert-warning"><small>Error: Atmost 30 characters</small></p>
+            </div></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <input (click)="updateProduct()" type="submit" class="btn btn-primary my-2" value="Update" [disabled]="updateForm.invalid">
   </div>
 
+  <div class="toast mt-3">
+      <div class="toast-header">
+        Toast Header
+      </div>
+      <div class="toast-body">
+        Some text inside the toast body
+      </div>
+    </div>
 </div>

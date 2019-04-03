@@ -1,0 +1,43 @@
+.field-container {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: yellow;
+  width: 35rem;
+  height: 20rem;
+}
+
+.container-full {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+}
+
+.form-container {
+  margin: 3rem;
+  height: 11rem;
+  padding-left: 5rem;
+  padding-top: 1rem;
+  background-color: greenyellow;
+}
+
+.btn {
+  left: 50%;
+  position: absolute;
+  top: 80%;
+  transform: translate(-50%, -50%);
+  border-radius: 0;
+}
+
+.heading {
+  left: 50%;
+  top: 50%;
+  width: 30rem;
+  height: 30rem;
+  padding-top: 1rem;
+  align-items: center;
+  margin-left: 27rem;
+  margin-top: 3rem;
+
+}
