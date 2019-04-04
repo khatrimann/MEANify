@@ -3,6 +3,7 @@ import { Product } from './../constants/product';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home',
@@ -65,8 +66,24 @@ export class HomeComponent implements OnInit {
 
  removeProductfromDb(id: string) {
    console.log(id);
+   let idSelector = '#' + id;
+
+   $(document).ready(() => {
+      $(idSelector)
+      .css('background-color', 'crimson')
+      .animate({
+        height: '3rem',
+      },
+      1000,
+      "swing")
+      .hide(2000);
+   });
+
     this.pushService.removeProductfromDb(id);
-    this.pushService.getData().subscribe(res => { this.response = res; console.log(this.response); });
+    setInterval(() => {
+      this.pushService.getData().subscribe(res => { this.response = res; console.log(this.response); });
+    }, 2500);
+
  }
 
 }
