@@ -26,6 +26,14 @@ var LawnSchema = new Schema({
         required: true,
         ref: 'User'
     },
+    lat: {
+        type: Number,
+        required: true
+    },
+    long: {
+        type: Number,
+        required: true
+    },
     precipitation: {
         type: Schema.Types.ObjectId,
         ref: 'Precipitation'

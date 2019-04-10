@@ -109,7 +109,21 @@ export class LoginComponent implements OnInit {
 
   register() {
     console.log(this.registerForm.value);
+    var values = {};
+    Object.keys(this.registerForm.get('address').controls).forEach((key) => {
+      console.log(this.registerForm.get('address').controls);
+      values[key] = this.registerForm.get('address').get(key).value;
+  });
 
+  Object.keys(this.registerForm.controls).forEach((key) => {
+    console.log(key);
+    values[key] = this.registerForm.get(key).value;
+  });
+  delete values['address'];
+  console.log(values);
+
+    this.authService.signUp(values).subscribe(res => console.log(res));
+    this.registerForm.reset();
   }
 
 }

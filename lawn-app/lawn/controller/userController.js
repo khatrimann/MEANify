@@ -26,7 +26,9 @@ var global_id;
                         city: req.body.city,
                         state: req.body.state,
                         zip: req.body.zip,
-                        user: global_id
+                        user: global_id,
+                        lat: req.body.lat,
+                        long: req.body.long
                     }, (err, address) => {
                             if(err) {
                                 console.log(err);

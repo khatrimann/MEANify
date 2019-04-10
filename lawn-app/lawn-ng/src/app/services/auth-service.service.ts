@@ -98,7 +98,8 @@ export class AuthServiceService {
      localStorage.removeItem(this.tokenKey);
    }
 
-   signUp() {
+   signUp(user: any): Observable<any> {
+     return this.http.post<any>(baseURL + 'users/signup', user);
 
    }
 
