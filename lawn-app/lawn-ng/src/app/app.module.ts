@@ -7,19 +7,25 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { LawnComponent } from './lawn/lawn.component';
+import { ChartsModule } from 'ng2-charts';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LawnComponent
   ],
   imports: [
+    GooglePlaceModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    ChartsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

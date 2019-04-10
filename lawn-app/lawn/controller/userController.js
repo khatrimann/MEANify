@@ -11,57 +11,6 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.signup = function(req, res, next) {
-    // if(req.body.state){
-    //     if(req.body.street) {
-    //         if(req.body.city) {
-    //             if(req.body.zip) {
-                                            
-    //                 Address.create({
-    //                     street: req.body.street,
-    //                     city: req.body.city,
-    //                     state: req.body.state,
-    //                     zip: req.body.zip
-    //                 }, (err, address) => {
-    //                     if(err) {
-    //                         console.log(err);
-    //                         return;
-    //                     }
-    //                     console.log(address._id);
-    //                     User.register(new User({username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname, address: address._id }), 
-    //                     req.body.password, (err, user) => {
-    //                         if(err) {
-    //                         res.statusCode = 500;
-    //                         res.setHeader('Content-Type', 'application/json');
-    //                         res.json({err: err});
-    //                         }
-    //                         else {
-    //                             if (req.body.firstname)
-    //                                 user.firstname = req.body.firstname;
-    //                             if (req.body.lastname)
-    //                                 user.lastname = req.body.lastname;
-    //                             if (req.body.address)
-    //                                 user.address = req.body.address;
-    //                             user.save((err, user) => {
-    //                                 if (err) {
-    //                                 console.log("second err");
-    //                                 res.statusCode = 500;
-    //                                 res.setHeader('Content-Type', 'application/json');
-    //                                 res.json({err: err});
-    //                                 return ;
-    //                                 }
-    //                                 passport.authenticate('local')(req, res, () => {
-    //                                 res.statusCode = 200;
-    //                                 res.setHeader('Content-Type', 'application/json');
-    //                                 res.json({success: true, status: 'Registration Successful!'});
-    //                                 });
-    //                             });
-    //                         }
-    //                     });
-    //                 });
-    //             }
-    //         }
-    //     }
-    // }
 var global_id;
     User.register(new User({username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname, address: null}), 
         req.body.password, (err, user) => {

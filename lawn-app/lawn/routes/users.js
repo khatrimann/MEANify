@@ -32,16 +32,44 @@ router.get('/:id', (req, res, next) => {
         },
         {
           $lookup: { 
-            from: "addresses",
+            from: "lawns",
             localField: "_id",
             foreignField: "user",
             as: "lawns"
-        }
-      }
-    ]).then(user => {
+          }
+        },
+        // {
+        //   $unwind: "$lawns"
+        // },
+        // {
+        //   $lookup: { 
+        //     from: "temperatures",
+        //     localField: "lawns.temperature",
+        //     foreignField: "_id",
+        //     as: "temps"
+        //   }
+        // },
+        // {
+        //   $lookup: { 
+        //     from: "precipitations",
+        //     localField: "lawns.precipitation",
+        //     foreignField: "_id",
+        //     as: "precs"
+        //   }
+        // },
+        // {
+        //   $project: {
+        //     _id: 1,
+        //     lawns: 1,
+        //     temps: 1,
+        //     precs: 1,
+        //   }
+        // }
+    ])
+    .then(result => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(user[0].lawns);
+        res.json(result[0].lawns);
       });
 });
 
