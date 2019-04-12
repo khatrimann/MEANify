@@ -2,7 +2,7 @@ import { AuthServiceService } from './../services/auth-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Address } from 'cluster';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 
 
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
   }
 
   addressChange(event) {
-    console.log(event)
+    console.log(event);
     console.log(event.target.value);
     let city, state;
     if (this.addr.address.split(', ')[-2]) {
@@ -110,8 +110,8 @@ export class LoginComponent implements OnInit {
   register() {
     console.log(this.registerForm.value);
     var values = {};
-    Object.keys(this.registerForm.get('address').controls).forEach((key) => {
-      console.log(this.registerForm.get('address').controls);
+    Object.keys(this.registerForm.get('address')).forEach((key) => {
+      console.log(this.registerForm.get('address'));
       values[key] = this.registerForm.get('address').get(key).value;
   });
 

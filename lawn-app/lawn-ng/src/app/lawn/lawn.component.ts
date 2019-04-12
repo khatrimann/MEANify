@@ -15,7 +15,12 @@ export class LawnComponent implements OnInit {
   lawnResult: any;
   dataPrecipitation: number[];
   dataTemperature: number[];
-
+  latitude = -28.68352;
+  longitude = -147.20785;
+  mapType = 'hybrid';
+  zoom = 11;
+  displayid = 1;
+  displaytype = "Temperature"
 
   public lineChartDataPrecipitation: ChartDataSets[] = [];
   public lineChartDataTemperature: ChartDataSets[] = [];
@@ -41,6 +46,9 @@ export class LawnComponent implements OnInit {
 
         this.dataPrecipitation = this.lawnResult[0].precipitation.precipitation;
         this.dataTemperature = this.lawnResult[0].temperature.temperature;
+        this.latitude = this.lawnResult[0].lat;
+        this.longitude = this.lawnResult[0].long;
+
 
         this.lineChartDataPrecipitation = [
           { data: this.dataPrecipitation, label: 'Series A' },
@@ -56,5 +64,32 @@ export class LawnComponent implements OnInit {
   }
 
   ngOnInit() {  }
+
+  next() {
+    this.displayid += 1;
+    if (this.displayid > 2) {
+      this.displayid = 1;
+    }
+    if (this.displayid === 2) {
+      this.displaytype = 'Precipitation';
+    }
+    if (this.displayid === 1) {
+      this.displaytype = 'Temperature';
+    }
+  }
+
+  prev() {
+    this.displayid -= 1;
+    if (this.displayid < 1) {
+      this.displayid = 2;
+    }
+
+    if (this.displayid === 1) {
+      this.displaytype = 'Temperature';
+    }
+    if (this.displayid === 2) {
+      this.displaytype = 'Precipitation';
+    }
+  }
 
 }

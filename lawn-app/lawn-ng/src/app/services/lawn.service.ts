@@ -13,4 +13,8 @@ export class LawnService {
   getLawn(id: string): Observable<any> {
     return this.http.get<any>(baseURL + 'lawns/' + id);
   }
+
+  pushLawn(id: any, body: any): Observable<any> {
+    return this.http.post<any>(baseURL + 'lawns/' + id, body);
+  }
 }

@@ -10,16 +10,21 @@ import { HomeComponent } from './home/home.component';
 import { LawnComponent } from './lawn/lawn.component';
 import { ChartsModule } from 'ng2-charts';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AgmCoreModule } from '@agm/core';
+import { AddComponent } from './add/add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    LawnComponent
+    LawnComponent,
+    AddComponent
   ],
   imports: [
     GooglePlaceModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBfZuebKAQlVtruGr8j3eYpOpeOg7kim2Y'}),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

@@ -1,31 +1,16 @@
-import { AddressService } from './../services/address.service';
-import { AuthServiceService } from './../services/auth-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { LawnService } from '../services/lawn.service';
-
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.css']
 })
-export class HomeComponent implements OnInit {
+export class AddComponent implements OnInit {
 
   @ViewChild('placesRef') placesRef: GooglePlaceDirective;
-
-
-  id: Subject<string> = undefined;
-  username: string = undefined;
-  subscription: Subscription;
-  isAuthenticated: Boolean;
-  lawns: any;
-  modal = false;
-  // searchControl = new FormControl('');
 
   addr = {lat: 0, long: 0, address: ''};
 
@@ -36,55 +21,16 @@ export class HomeComponent implements OnInit {
     zip: new FormControl(''),
     state: new FormControl(''),
     lat: new FormControl(''),
-    long: new FormControl(''),
-    user: new FormControl(''),
-    precipitation: new FormControl(''),
-    temperature: new FormControl('')
+    long: new FormControl('')
   });
-  constructor(private authService: AuthServiceService, private addressService: AddressService, private lawnService: LawnService) {
-    this.authService.loadUserCredentials();
-    this.id = authService.id;
-    // console.log(this.id);
-    this.addressService.getLawns(this.id).subscribe(lawns => { this.lawns = lawns; console.log(this.lawns); });
-   }
 
-   generatePrecipitation(): number[]{
-    let prec = [];
-    for(let i=0; i<12; i++) {
-      prec.push(Math.floor(Math.random() * 128) + 0  );
-    }
-    return prec;
-  }
-
-  generateTemperature(): number[]{
-    let temp = [];
-    for(let i=0; i<12; i++) {
-      temp.push(Math.floor(Math.random() * 50) + 30  );
-    }
-    return temp;
-  }
+  constructor() { }
 
   ngOnInit() {
-    this.authService.loadUserCredentials();
-    this.id = this.authService.id;
-    this.addLawnForm.patchValue({
-      user: this.id;
-      precipitation: this.generatePrecipitation(),
-      temperature: this.generateTemperature(),
-
-    });
-    console.log(this.id);
-    this.addressService.getLawns(this.id).subscribe(lawns => { this.lawns = lawns; console.log(this.lawns); });
   }
-
-  print(query: any) {
-    console.log(query);
-  }
-
 
   register() {
     console.log(this.addLawnForm.value);
-    this.lawnService.pushLawn(this.id, this.addLawnForm.value).subscribe(res => console.log(res));
   }
 
   addressChange(event) {
@@ -129,13 +75,13 @@ export class HomeComponent implements OnInit {
 
       this.addLawnForm.patchValue({
         searchControl: this.addr.address,
+        address: {
           city: city,
           state: state,
           street: street,
           lat: this.addr.lat,
           long: this.addr.long
+        }
       });
       }
-
-
 }

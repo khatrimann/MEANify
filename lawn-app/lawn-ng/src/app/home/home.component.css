@@ -1,0 +1,8 @@
+.pac-container {
+    z-index: 1000000 !important;
+ }
+
+ ::ng-deep .pac-container {
+    z-index: 100000;
+  } 
+  /* This is the working property */
