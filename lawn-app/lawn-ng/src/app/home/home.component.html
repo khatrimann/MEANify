@@ -1,18 +1,37 @@
-<div class="container">
+<div class="container my-4">
 
-  <div>
-      <button type="button" class="btn btn-light" style="float: right;" data-target="#exampleModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Add Lawn</button>
+  <div class="row">
+
+      <button type="button" class="btn btn-light" data-target="#exampleModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Add Lawn</button>
+
   </div>
 
-    <div *ngIf="lawns" class="my-4">
-      <div class="card bg-transparent mb-3" style="height: 15rem;" *ngFor="let lawn of lawns">
-        <div class="card-header">{{ lawn.street }}</div>
-        <div class="card-body" [routerLink]="['/lawns', lawn._id]">
-          <h5 class="card-title">{{ lawn.city }}</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  <div class="row">
+    <div class="col">
+      <div *ngIf="lawns" class="my-4">
+        <div class="card bg-transparent mb-3" style="height: 15rem;" *ngFor="let lawn of lawns">
+          <div class="card-header">{{ lawn.street }}</div>
+          <div class="card-body" [routerLink]="['/lawns', lawn._id]">
+            <h5 class="card-title">{{ lawn.city }}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="col">
+      <div class="container weather-container">
+          <h3 style="padding-top: 5rem; margin-right: 4rem;">Temperature</h3>
+          <p style="font-size: 9rem; margin-left: 2rem;">27&deg;C</p>
+
+          <h2 style="padding-left: 15rem;">Wind</h2>
+          <p style="font-size: 9rem; text-align: right">10 <span style="font-size: 4rem;">Km/h</span></p>
+      </div>
+    </div>
+
+  </div>
+
+
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,4 +95,4 @@
       </div>
     </div>
 
-    
+
