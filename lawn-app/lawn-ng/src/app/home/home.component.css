@@ -13,5 +13,9 @@
   background-position: top right, bottom left;
   background-repeat: no-repeat;
   background-color: white;
-  background-size: 15rem 15rem
+  background-size: 15rem 15rem;
+  position: fixed;
+  width: 37rem;
+  top: 60px;
+  right: 100px;
 }

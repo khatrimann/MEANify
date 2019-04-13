@@ -1,6 +1,6 @@
 import { AuthServiceService } from './../services/auth-service.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
@@ -51,8 +51,15 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.log(this.loginForm.value);
-    this.authService.logIn(this.loginForm.value).subscribe(res => console.log(res));
-    this.route.navigate(['/home']);
+    this.authService.logIn(this.loginForm.value).subscribe(res => {
+      console.log(res);
+      if (res.success) {
+      this.route.navigate(['/home']);
+    } else {
+      console.log('Invalid');
+    }
+    });
+
   }
 
   addressChange(event) {
@@ -110,9 +117,11 @@ export class LoginComponent implements OnInit {
   register() {
     console.log(this.registerForm.value);
     var values = {};
-    Object.keys(this.registerForm.get('address')).forEach((key) => {
-      console.log(this.registerForm.get('address'));
-      values[key] = this.registerForm.get('address').get(key).value;
+
+    Object.keys(this.registerForm.controls['address'].value).forEach((key) => {
+      console.log(this.registerForm.controls['address'].get(key).value);
+      // console.log(key);
+      values[key] = this.registerForm.controls['address'].get(key).value;
   });
 
   Object.keys(this.registerForm.controls).forEach((key) => {
@@ -122,8 +131,8 @@ export class LoginComponent implements OnInit {
   delete values['address'];
   console.log(values);
 
-    this.authService.signUp(values).subscribe(res => console.log(res));
-    this.registerForm.reset();
+  this.authService.signUp(values).subscribe(res => console.log(res));
+  this.registerForm.reset();
   }
 
 }

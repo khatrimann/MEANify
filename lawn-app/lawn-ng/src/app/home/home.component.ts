@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
     this.authService.loadUserCredentials();
     this.id = this.authService.id;
     this.addLawnForm.patchValue({
-      user: this.id;
+      user: this.id,
       precipitation: this.generatePrecipitation(),
       temperature: this.generateTemperature(),
 

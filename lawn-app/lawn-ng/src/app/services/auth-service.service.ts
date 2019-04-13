@@ -31,6 +31,9 @@ export class AuthServiceService {
   username: Subject<string> = new Subject<string>();
   authToken: string = undefined;
   id: Subject<string> = new Subject<string>();
+  loggedIn: Subject<Boolean> = new Subject<Boolean>();
+  loggedOut: Subject<Boolean> = new Subject<Boolean>();
+
 
    constructor(private http: HttpClient,
      private processHTTPMsgService: ProcessHttpmsgService) {
@@ -42,10 +45,12 @@ export class AuthServiceService {
        console.log('JWT Token Valid: ', res);
        this.sendUsername(res.user.username);
        // this.sendId(res.user._id);
+       this.sendLoggedIn(true);
      },
      err => {
        console.log('JWT Token invalid: ', err);
        this.destroyUserCredentials();
+       this.sendLoggedOut(true);
      });
    }
 
@@ -56,6 +61,14 @@ export class AuthServiceService {
   //  sendId(id: string) {
   //   this.id.next(id);
   // }
+
+  sendLoggedIn(status: Boolean) {
+    this.loggedIn.next(status);
+  }
+
+  sendLoggedOut(status: Boolean) {
+    this.loggedOut.next(status);
+  }
 
    clearUsername() {
      this.username.next(undefined);
@@ -68,6 +81,14 @@ export class AuthServiceService {
        this.useCredentials(credentials);
        if (this.authToken) {
         this.checkJWTtoken();
+        this.loggedIn.subscribe(loggedin => {
+          const interval = setInterval(() => {
+            this.checkJWTtoken();
+          }, 10000);
+          if (!loggedin) {
+            clearInterval(interval);
+          }
+        });
        }
      }
    }
@@ -89,6 +110,8 @@ export class AuthServiceService {
      // this.userid = helper.decodeToken(this.authToken)._id;
      console.log('id is ' + this.id);
      // this.sendId(helper.decodeToken(this.authToken)._id);
+     this.sendLoggedIn(true);
+     this.sendLoggedOut(false);
    }
 
    destroyUserCredentials() {
@@ -96,6 +119,8 @@ export class AuthServiceService {
      this.clearUsername();
      this.isAuthenticated = false;
      localStorage.removeItem(this.tokenKey);
+     this.sendLoggedOut(true);
+     this.sendLoggedIn(false);
    }
 
    signUp(user: any): Observable<any> {
@@ -115,6 +140,8 @@ export class AuthServiceService {
 
    logOut() {
      this.destroyUserCredentials();
+     this.sendLoggedIn(false);
+     this.sendLoggedOut(true);
    }
 
    isLoggedIn(): Boolean {
@@ -132,5 +159,13 @@ export class AuthServiceService {
    getToken(): string {
      return this.authToken;
    }
+
+   getLoggedIn(): Observable<Boolean> {
+     return this.loggedIn.asObservable();
+   }
+
+   getLoggedOut(): Observable<Boolean> {
+    return this.loggedOut.asObservable();
+  }
 
 }

@@ -1,7 +1,11 @@
+import { ProcessHttpmsgService } from './services/process-httpmsg.service';
+import { AuthServiceService } from './services/auth-service.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AddressService } from './services/address.service';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,6 +16,8 @@ import { ChartsModule } from 'ng2-charts';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AgmCoreModule } from '@agm/core';
 import { AddComponent } from './add/add.component';
+import { LawnService } from './services/lawn.service';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +25,8 @@ import { AddComponent } from './add/add.component';
     LoginComponent,
     HomeComponent,
     LawnComponent,
-    AddComponent
+    AddComponent,
+    HeaderComponent
   ],
   imports: [
     GooglePlaceModule,
@@ -29,9 +36,16 @@ import { AddComponent } from './add/add.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule
     ],
-  providers: [],
+  providers: [
+    AddressService,
+    AuthGuardService,
+    AuthServiceService,
+    LawnService,
+    ProcessHttpmsgService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
