@@ -89,6 +89,7 @@ export class AppComponent implements OnInit {
   }
 
   uploadFile(data: FormData): Observable<any>{
+
     console.log(data);
     return this.http.post<any>('http://localhost:3000/upload', data,  {
       reportProgress: true, observe: 'events'
