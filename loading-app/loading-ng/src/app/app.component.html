@@ -1,0 +1,19 @@
+<div class="fixed-top progress-bar" role="progressbar" style="background: blueviolet;" [ngStyle]="{ 'width': (posts.length/20)*100+ '%' }" >
+  Posts Loaded: {{ posts.length }}
+</div>
+
+<div *ngIf="posts">
+  <div class="card mx-auto" *ngFor="let post of posts">
+    <div class="card-header">
+        {{ post.title | uppercase }}
+    </div>
+    <div class="card-body">
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+        <br>
+        <strong>Description:</strong> {{ post.description }}
+      </p>
+      <p class="card-text"><small class="text-muted">Last updated {{ post.uploadDate }}</small></p>
+    </div>
+    <img src="http://localhost:3000/images/images/{{post.filename.slice(23, post.filename.length)}}" class="card-img-top" alt="{{post.filename.slice(23, post.filename.length)}}" style="height: 15rem">
+  </div>
+</div>
