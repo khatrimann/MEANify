@@ -1,0 +1,11 @@
+<div class="conatiner py-3">
+  <form [formGroup]="postForm" (ngSubmit)="onPost()">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">With textarea</span>
+      </div>
+      <textarea [mention]="users" [mentionConfig]="{triggerChar:'@',maxItems:10,labelKey:'name'}" class="form-control" aria-label="Post" formControlName="text" maxlength="1024" (change)="inputChange($event.target)"></textarea>
+    </div>
+    <a type="submit" class="btn btn-primary float-right my-2">Post</a>
+  </form>
+</div>
