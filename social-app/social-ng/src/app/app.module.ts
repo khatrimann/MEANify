@@ -14,13 +14,15 @@ import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MentionModule } from 'angular-mentions';
+import { LinkPipe } from './pipes/link.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    LinkPipe
   ],
   imports: [
     BrowserModule,

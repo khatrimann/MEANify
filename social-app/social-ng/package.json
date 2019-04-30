@@ -23,6 +23,7 @@
     "@auth0/angular-jwt": "^2.1.0",
     "angular-mentions": "^1.0.1",
     "core-js": "^2.5.4",
+    "linkifyjs": "^2.1.8",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },

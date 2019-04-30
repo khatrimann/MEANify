@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
 
   signUp() {
     console.log(this.loginForm.value);
+    this.authService.signup(this.loginForm.value).subscribe(res => {
+      console.log(res);
+    });
   }
+
 
 }

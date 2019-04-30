@@ -46,7 +46,7 @@ export class AuthService {
   constructor(private http: HttpClient, private processHTTPMsgService: ProcessHttpmsgService, private router: Router) { }
 
   checkJWTtoken() {
-    this.http.get<JWTResponse>(localUrl + 'users/checkJWTtoken', {headers: new HttpHeaders({'Authorization': 'bearer ' + this.authToken})})
+    this.http.get<JWTResponse>(localUrl + 'users/checkJWTToken', {headers: new HttpHeaders({'Authorization': 'bearer ' + this.authToken})})
     .subscribe(res => {
       console.log('JWT Token Valid: ', res);
       this.sendUsername(res.user.username);
@@ -201,4 +201,8 @@ export class AuthService {
  getLastName(): Observable<string> {
   return this.lastname.asObservable();
 }
+
+  signup(body: any): Observable<any> {
+    return this.http.post<any>(localUrl + 'users/signup', body);
+  }
 }

@@ -17,14 +17,25 @@ router.post('/signup', (req, res, next) => {
   loginController.signup(req, res, next);
 });
 
+router.post('/:id/post', (req, res, next) => {
+    userController.post(req, res, next);
+});
+
+router.get('/:id/post', (req, res, next) => {
+  userController.getPost(req, res, next);
+});
+
+router.get('/:id/mentions', (req, res, next) => {
+  userController.mentions(req, res, next);
+});
+
 router.get('/checkJWTToken', (req, res) => {
-  console.log(req);
   passport.authenticate('jwt', {session: false}, (err, user, info) => {
     console.log("entered");
     console.log(user);
     console.log(req.user);
     if (err)
-      res.json(err);
+      return next(err);
     
     if (!user) {
       console.log("User doesn't exists");

@@ -1,11 +1,45 @@
-<div class="conatiner py-3">
-  <form [formGroup]="postForm" (ngSubmit)="onPost()">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">With textarea</span>
-      </div>
-      <textarea [mention]="users" [mentionConfig]="{triggerChar:'@',maxItems:10,labelKey:'name'}" class="form-control" aria-label="Post" formControlName="text" maxlength="1024" (change)="inputChange($event.target)"></textarea>
+<div class="conatiner py-3 px-3">
+
+  <div class="row">
+
+    <div class="col">
+      <form [formGroup]="postForm">
+        <div class="input-group px-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Post</span>
+          </div>
+          <textarea [mention]="users" [mentionConfig]="{triggerChar:'@',maxItems:10,labelKey:'name'}" rows=7 class="form-control" aria-label="Post" formControlName="text" maxlength="1024" (change)="inputChange($event.target)"></textarea>
+        </div>
+        <a class="btn btn-primary float-right my-2" (click)="onPost()">Post</a>
+      </form>
     </div>
-    <a type="submit" class="btn btn-primary float-right my-2">Post</a>
-  </form>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col">
+      <div class="heading text-center py-3">
+        My Posts
+      </div>
+      <div *ngIf="posts" class="border">
+        <div *ngFor="let post of posts">
+          {{ post.post | link:users }}<hr>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="heading text-center py-3">
+        Mentioned Posts
+      </div>
+      <div *ngIf="mentions" class="border">
+        <div *ngFor="let mentioned of mentions">
+          {{ mentioned.post }}<hr>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
