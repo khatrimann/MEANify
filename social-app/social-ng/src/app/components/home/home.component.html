@@ -24,7 +24,7 @@
       </div>
       <div *ngIf="posts" class="border">
         <div *ngFor="let post of posts">
-          {{ post.post | link:users }}<hr>
+          <div [innerHTML]="post.post | link:users:users_ids" routerTransFormer></div><hr>
         </div>
       </div>
     </div>

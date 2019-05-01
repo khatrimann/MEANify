@@ -9,6 +9,10 @@ router.get('/', function(req, res, next) {
   userController.getUsers(req, res, next);
 });
 
+router.get('/:id/profile', function(req, res, next) {
+  userController.getUser(req, res, next);
+});
+
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
   loginController.login(req, res, next);
 });

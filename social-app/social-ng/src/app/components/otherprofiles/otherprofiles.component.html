@@ -1,0 +1,7 @@
+<div *ngIf="user">
+  {{ user.firstname }}
+  {{ user.lastname }}
+  <div *ngFor="let post of user.posts">
+    <div [innerHTML]="post.post | link:users:users_ids" routerTransFormer></div>
+  </div>
+</div>

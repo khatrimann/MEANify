@@ -9,6 +9,14 @@ module.exports.getUsers = (req, res, next) => {
     });
 };
 
+module.exports.getUser = (req, res, next) => {
+    User.findById({ _id: req.params.id })
+    .populate('posts')
+    .then(user => {
+        res.json(user);
+    });
+};
+
 module.exports.post = (req, res, next) => {
     Post.create(new Post({
         post: req.body.text

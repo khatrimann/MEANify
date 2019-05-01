@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MentionModule } from 'angular-mentions';
 import { LinkPipe } from './pipes/link.pipe';
+import { RouterTransFormerDirective } from './directives/router-trans-former.directive';
+import { OtherprofilesComponent } from './components/otherprofiles/otherprofiles.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { LinkPipe } from './pipes/link.pipe';
     HeaderComponent,
     HomeComponent,
     LoginComponent,
-    LinkPipe
+    LinkPipe,
+    RouterTransFormerDirective,
+    OtherprofilesComponent
   ],
   imports: [
     BrowserModule,
