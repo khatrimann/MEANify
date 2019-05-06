@@ -43,6 +43,9 @@ export class HomeComponent implements OnInit {
 
   sendMessageTo() {
     console.log(this.to);
+    if (this.message) {
+      this.messages.push(this.username + ': ' + this.message);
+    }
     this.chatService.sendMessageTo(this.to, this.username, this.message);
     console.log(this.to);
     this.message = '';
