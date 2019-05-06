@@ -1,0 +1,16 @@
+<div *ngFor="let message of messages">
+  {{message}}
+</div>
+
+<input [(ngModel)]="to" (click)="sendMessageTo()" />
+<input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessageTo()" />
+<button (click)="sendMessageTo()">Send</button>
+
+
+<div class="container">
+  <div class="users" *ngIf="users">
+    <div *ngFor="let user of users" (click)="to=user.socketId">
+      <div class="rounded" *ngIf="user.online" style="width: .5rem; height: .5rem; background-color: green;display: inline-block;"></div> {{ user.username}}
+    </div>
+  </div>
+</div>
