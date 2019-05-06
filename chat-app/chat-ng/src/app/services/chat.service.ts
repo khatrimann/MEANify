@@ -22,8 +22,8 @@ export class ChatService {
       this.socket.emit('login', id);
     }
 
-    public sendMessageTo(to, message) {
-      this.socket.emit('msg', { message: message, to: to });
+    public sendMessageTo(to, from, message) {
+      this.socket.emit('msg', { message: message, to: to, from: from });
     }
 
     public getMessages = () => {

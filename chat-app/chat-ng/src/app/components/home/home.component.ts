@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
 import { ChatService } from './../../services/chat.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,12 +14,15 @@ export class HomeComponent implements OnInit {
   to: string;
   messages: string[] = [];
   users;
+  username: string = undefined;
 
-  constructor(private chatService: ChatService, private userService: UserService) {
+  constructor(private chatService: ChatService, private userService: UserService, private authService: AuthService) {
 
     userService.getUsers().subscribe(users => {
       this.users = users;
   });
+
+    this.username = authService.string_user;
 
     this.chatService
     .getMessages()
@@ -40,7 +44,7 @@ export class HomeComponent implements OnInit {
 
   sendMessageTo() {
     console.log(this.to);
-    this.chatService.sendMessageTo(this.to, this.message);
+    this.chatService.sendMessageTo(this.to, this.username, this.message);
     console.log(this.to);
     this.message = '';
   }

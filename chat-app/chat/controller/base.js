@@ -17,7 +17,7 @@ module.exports.IOHandler = (io, to="") => {
         
         socket.on('msg', (data) => {
           console.log('Sending msg: ' + data.message + ' to ' + data.to);
-          io.to(data.to).emit('pmsg', data.message);
+          io.to(data.to).emit('pmsg', data.from + ': ' + data.message);
           User.findOneAndUpdate({ socketId: data.to }, { lastMsg: data.message }, {upsert: true})
           .then(user => {
             console.log(user);

@@ -43,6 +43,7 @@ export class AuthService {
   lname: string;
   role: Subject<string> = new Subject<string>();
   string_id: string;
+  string_user: string;
 
   constructor(private http: HttpClient, private processHTTPMsgService: ProcessHttpmsgService, private router: Router, private chatService: ChatService) { }
 
@@ -72,6 +73,7 @@ export class AuthService {
   }
 
   sendUsername(name: string) {
+    this.string_user = name;
     this.username.next(name);
   }
 
@@ -159,6 +161,7 @@ export class AuthService {
         this.response = res;
         this.sendFirstname(this.response.firstname);
         this.sendLastname(this.response.lastname);
+        this.sendUsername(user.username);
           this.storeUserCredentials({username: user.username, token: res.token});
           return {'success': true, 'username': user.username, 'firstname': this.response.firstname, 'lastname': this.response.lastname };
       }),
