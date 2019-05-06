@@ -171,6 +171,7 @@ export class AuthService {
 
   logOut() {
     this.destroyUserCredentials();
+    this.chatService.sendDisconnect();
     this.sendLoggedIn(false);
     this.sendLoggedOut(true);
     this.router.navigate(['/login']);

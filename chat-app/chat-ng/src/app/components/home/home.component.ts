@@ -2,6 +2,7 @@ import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
 import { ChatService } from './../../services/chat.service';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -15,31 +16,29 @@ export class HomeComponent implements OnInit {
   messages: string[] = [];
   users;
   username: string = undefined;
+  interval: any;
+  userSubscription: Subscription;
+  chatSubscription: Subscription;
 
   constructor(private chatService: ChatService, private userService: UserService, private authService: AuthService) {
 
-    userService.getUsers().subscribe(users => {
+   this.userSubscription = userService.getUsers().subscribe(users => {
       this.users = users;
   });
 
     this.username = authService.string_user;
 
-    this.chatService
+    this.chatSubscription =  this.chatService
     .getMessages()
     .subscribe((message: string) => {
       this.messages.push(message);
     });
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       userService.getUsers().subscribe(users => {
         this.users = users;
     });
     }, 10000);
-  }
-
-  sendMessage() {
-    this.chatService.sendMessage(this.message);
-    this.message = '';
   }
 
   sendMessageTo() {
@@ -54,5 +53,12 @@ export class HomeComponent implements OnInit {
     .subscribe((message: string) => {
       this.messages.push(message);
     });
+  }
+
+  logout() {
+    clearInterval(this.interval);
+    this.userSubscription.unsubscribe();
+    this.chatSubscription.unsubscribe();
+    this.authService.logOut();
   }
 }

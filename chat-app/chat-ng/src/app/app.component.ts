@@ -6,22 +6,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  message: string;
-  messages: string[] = [];
+export class AppComponent  {
 
-  constructor(private chatService: ChatService) {}
-
-  sendMessage() {
-    this.chatService.sendMessage(this.message);
-    this.message = '';
-  }
-
-  ngOnInit() {
-  this.chatService
-    .getMessages()
-    .subscribe((message: string) => {
-      this.messages.push(message);
-    });
-  }
 }
