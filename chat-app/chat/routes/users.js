@@ -13,43 +13,84 @@ router.get('/', function(req, res, next) {
 
    
  /**
- * @swagger
+ * @swagger 
+ * components:
+ * securitySchemes:
+ *   bearerAuth:            # arbitrary name for the security scheme
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT  
+ * 
+ * 
  * definitions:
  *   User:
  *     properties:
  *       username:
  *         type: string
-
- *       paswword:
- *         type: password
-
+ *       firstname:
+ *         type: string
+ *       lastname:
+ *         type: string
+ *       socketId:
+ *         type: string
+ *       lastMsg:
+ *         type: string
+ *       online:
+ *         type: boolean
+ *       chats:
+ *         type: array
  *  
- */     
+ */    
 /**
-* @swagger
-* schemes:
-*   - http
-*   - https
-* securityDefinitions:
-*   Bearer:
-*     type: apiKey
-*     name: Authorization
-*     in: header
-* paths:
-*   /users/login:
-*     get:
-*       security:
-*         - Bearer: []
-*       responses:
-*         '200':
-*           description: 'Will send `Authenticated`'
-*         '403': 
-*           description: 'You do not have necessary permissions for the resource'
-*/
+ * @swagger
+ * /users/login:
+ *   post:
+ *     tags:
+ *       - user
+ *     description: login user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: user login
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref:'#/definitions/User'
+ *     responses:
+ *       200:
+ *         description: Login succesfully
+ *       401:
+ *         description: User not found
+ *       403:
+ *         description: Username and password don't match
+ */
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
   loginController.login(req, res, next);
 });
 
+
+/**
+ * @swagger
+ * /users/register:
+ *   post:
+ *     tags:
+ *       - user
+ *     description: register user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: user resgistration
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref:'#/definitions/User'
+ *     responses:
+ *       200:
+ *         description:  succesfully
+ *      
+ */
 router.post('/signup', (req, res, next) => {
   loginController.signup(req, res, next);
 });

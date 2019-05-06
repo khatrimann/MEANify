@@ -10,6 +10,7 @@ var passport = require('passport');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var swaggerJSDoc = require('swagger-jsdoc');
+var swagger = require('swagger-ui-express');
 
 mongoose.connect(constants.mongoUrl)
 .then((db) => {
@@ -43,6 +44,8 @@ app.get('/swagger.json', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
+
+app.use('/api-docs', swagger.serve, swagger.setup(swaggerSpec));
 
 app.use(cors({ origin: true }));
 app.use(function(req, res, next) {

@@ -25,7 +25,17 @@ var userSchema = new Schema({
     online: {
         type: Boolean,
         default: false,
+    },
+    chats: [{
+        from: String,
+        to: String,
+        message: String
+    },
+{
+    timestamps: {
+        createdAt: 'created_at'
     }
+}]
 });
 
 userSchema.plugin(passportlocal);
