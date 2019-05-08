@@ -10,7 +10,9 @@
 
       <input [(ngModel)]="to" (click)="sendMessageTo()" />
       <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessageTo()" />
+      <input [(ngModel)]="path" type="file" id="file" (change)="handleFileInput($event.target.files)">
       <button (click)="sendMessageTo()">Send</button>
+      <button (click)="console()">print</button>
 
       <div class="users" *ngIf="users">
         <div *ngFor="let user of users" (click)="to=user.socketId">
@@ -20,9 +22,25 @@
     </div>
 
     <div class="col">
-      <div class="row" style="height: 13rem;" *ngFor="let user of users">
-        <div class="col border">
-          {{ user.username }}
+      <div class="row" style="height: 20rem;  width: 14rem; padding-bottom: 2rem;" *ngFor="let user of users">
+        <div class="col border" (click)="focus(user.username)" style="height: 17rem; overflow: auto;" >
+          <div class="chat-header">{{ user.username | titlecase }}</div>
+          <div *ngFor="let chats of user.chats">
+              <!-- <div *ngIf="chats.from==username" style="float: right">{{ chats.from }}</div>
+              <div *ngIf="chats.from!=username" style="float: left">{{ chats.from }}</div> -->
+
+              <!-- <div *ngIf="!chats.read" style="color: red">{{ chats.from }}: {{ chats.message }}</div>
+              <div *ngIf="chats.read">{{ chats.from }}: {{ chats.message }}</div> -->
+
+              <div>
+                <div *ngIf="chats.from==user.username" [ngClass]="chats.read?'read':'unread'" class="box sb2">{{ chats.message }}</div>
+                <div *ngIf="chats.from!=user.username" class="box sb1">{{ chats.message }}</div>
+              </div>
+
+              <!-- <div class="box sb1">I'm speech bubble</div>
+              <div class="box sb2">I'm speech bubble</div> -->
+
+          </div>
         </div><hr>
       </div>
     </div>

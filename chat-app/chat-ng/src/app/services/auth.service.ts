@@ -154,10 +154,16 @@ export class AuthService {
         const helper = new JwtHelperService();
         console.log(helper.decodeToken(res.token)._id);
         this.sendId(helper.decodeToken(res.token)._id);
-        this.getId().subscribe(user_id => {
-          this.string_id = user_id;
-          this.chatService.sendId(user_id);
-        });
+        if (this.string_id) {
+          console.log('Id to be sent for chat[if]: ' + this.string_id);
+          this.chatService.sendId(this.string_id);
+        } else {
+          this.getId().subscribe(user_id => {
+            this.string_id = user_id;
+            console.log('Id to be sent for chat[else]: ' + this.string_id);
+            this.chatService.sendId(this.string_id);
+          });
+      }
         this.response = res;
         this.sendFirstname(this.response.firstname);
         this.sendLastname(this.response.lastname);

@@ -10,3 +10,10 @@ module.exports.getUsers = (req, res, next) => {
         res.json(users);
     });
 };
+
+module.exports.getChats = (req, res, next) => {
+    User.findOne({ _id: req.params.id})
+    .then(user => {
+        res.json(user.chats);
+    })
+};

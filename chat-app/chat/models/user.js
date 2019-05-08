@@ -29,7 +29,15 @@ var userSchema = new Schema({
     chats: [{
         from: String,
         to: String,
-        message: String
+        message: String,
+        status: {
+            type: String,
+            default: 'sent'
+        },
+        read: {
+            type: Boolean,
+            default: false
+        }
     },
 {
     timestamps: {
