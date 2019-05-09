@@ -37,7 +37,16 @@ var userSchema = new Schema({
         read: {
             type: Boolean,
             default: false
-        }
+        },
+        image: {
+            type: Boolean,
+            default: false
+        },
+        audio: { 
+            type: Boolean,
+            default: false
+         },
+        base64: String
     },
 {
     timestamps: {

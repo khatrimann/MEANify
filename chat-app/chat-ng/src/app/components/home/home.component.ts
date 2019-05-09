@@ -2,7 +2,10 @@ import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
 import { ChatService } from './../../services/chat.service';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
+import { FsService } from 'ngx-fs';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { sanitizeUrl } from '@angular/core/src/sanitization/sanitization';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +17,7 @@ export class HomeComponent implements OnInit {
   message: string;
   to: string;
   messages: string[] = [];
-  users;
+  users: any[] = [];
   username: string = undefined;
   interval: any;
   userSubscription: Subscription;
@@ -24,11 +27,17 @@ export class HomeComponent implements OnInit {
   chat_users = new Set();
   path: string;
   fileToUpload: File = null;
+  imageurl: any;
+  FILE: any;
 
-  constructor(private chatService: ChatService, private userService: UserService, private authService: AuthService) {
+  constructor(private chatService: ChatService, private userService: UserService, private authService: AuthService, private fsService: FsService, private domSanitizer: DomSanitizer) {
+
 
    this.userSubscription = userService.getUsers().subscribe(users => {
-      this.users = users;
+      // this.users = users;
+      this.users = [];
+      this.users.push(...users);
+      console.log(this.users);
 
     if (!authService.string_id) {
       authService.getId().subscribe(id => {
@@ -65,7 +74,10 @@ export class HomeComponent implements OnInit {
 
     this.interval = setInterval(() => {
       userService.getUsers().subscribe(users => {
-        this.users = users;
+        // this.users = users;
+        this.users = [];
+      this.users.push(...users);
+      console.log(this.users);
     });
     }, 10000);
   }
@@ -77,10 +89,7 @@ export class HomeComponent implements OnInit {
       this.chatService.sendMessageTo(this.to, this.username, this.message);
       console.log(this.to);
       this.message = '';
-    } else {
-
     }
-
   }
   ngOnInit() {
   this.chatService
@@ -106,8 +115,21 @@ export class HomeComponent implements OnInit {
     console.log(this.path);
   }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-    console.log(files);
-}
+  changeListener($event): void {
+    this.readThis($event.target);
+  }
+
+  readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    console.log(file);
+    const type = file.type.split('/')[0];
+    const myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.FILE = myReader.result;
+      // this.imageurl = this.domSanitizer.bypassSecurityTrustUrl(myReader.result.toString());
+      this.chatService.sendMessageTo(this.to, this.username, null, this.FILE, type);
+    };
+    myReader.readAsDataURL(file);
+  }
 }

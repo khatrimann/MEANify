@@ -91,6 +91,48 @@ module.exports.IOHandler = (io) => {
             });
         });
 
+        socket.on('image', (data) => {
+          console.log('image invoked');
+          // console.log(data.buff);
+          io.to(data.to).emit('imgmsg', data.buff);
+          User.findOne({ socketId: data.to })
+          .then(user => {
+            console.log(user);
+            const toUser = user.username
+            user.chats.push({ to: user.username, from: data.from, image: true, base64: data.buff });
+            user.save()
+            User.findOne({ username: data.from })
+          .then(user => {
+            console.log(user);
+            user.chats.push({ to: toUser, from: data.from, image: true, base64: data.buff });
+            user.save();
+          });
+        });
+            
+          });
+
+          
+          socket.on('audio', (data) => {
+            console.log('audio invoked');
+            // console.log(data.buff);
+            io.to(data.to).emit('audmsg', data.buff);
+            User.findOne({ socketId: data.to })
+            .then(user => {
+              console.log(user);
+              const toUser = user.username
+              user.chats.push({ to: user.username, from: data.from, audio: true, base64: data.buff });
+              user.save()
+              User.findOne({ username: data.from })
+            .then(user => {
+              console.log(user);
+              user.chats.push({ to: toUser, from: data.from, audio: true, base64: data.buff });
+              user.save();
+            });
+          });
+              
+            });
+
+
         socket.on('disconnect', () => {
           console.log(socket.id + ' disconnected');
           User.findOneAndUpdate({ socketId: socket.id }, { online: false})

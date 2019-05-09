@@ -7,10 +7,10 @@
       <div *ngFor="let message of messages">
         {{message}}
       </div>
-
+      <!-- <img [src]="image" /> -->
       <input [(ngModel)]="to" (click)="sendMessageTo()" />
       <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessageTo()" />
-      <input [(ngModel)]="path" type="file" id="file" (change)="handleFileInput($event.target.files)">
+      <input [(ngModel)]="path" type="file" id="file" accept="audio/*, image/*" (change)="changeListener($event)">
       <button (click)="sendMessageTo()">Send</button>
       <button (click)="console()">print</button>
 
@@ -33,14 +33,41 @@
               <div *ngIf="chats.read">{{ chats.from }}: {{ chats.message }}</div> -->
 
               <div>
-                <div *ngIf="chats.from==user.username" [ngClass]="chats.read?'read':'unread'" class="box sb2">{{ chats.message }}</div>
-                <div *ngIf="chats.from!=user.username" class="box sb1">{{ chats.message }}</div>
+                <div *ngIf="chats.from==user.username" [ngClass]="chats.read?'read':'unread'" class="box sb2"><div *ngIf="chats.message">{{ chats.message }}</div>
+                <div *ngIf="chats.base64">
+                    <audio *ngIf="chats.audio" controls [src]="chats.base64"></audio>
+                    <img *ngIf="chats.image" [src]="chats.base64">
+                  </div></div>
+                <div *ngIf="chats.from!=user.username" class="box sb1">
+                  <div *ngIf="chats.message">{{ chats.message }}</div>
+                  <div *ngIf="chats.base64">
+                    <audio *ngIf="chats.audio" controls [src]="chats.base64"></audio>
+                    <img *ngIf="chats.image" [src]="chats.base64">
+                  </div>
+                </div>
               </div>
+
+              <!-- <div *ngIf="chats.status=='sent' && chats.read==false">
+                  <i class="fas fa-check"></i>
+              </div>
+
+              <div *ngIf="chats.status=='sent' && chats.read">
+                  <i class="fas fa-check-double"></i>
+              </div> -->
 
               <!-- <div class="box sb1">I'm speech bubble</div>
               <div class="box sb2">I'm speech bubble</div> -->
 
           </div>
+
+          <div *ngIf="user.chats[user.chats.length - 1].status=='sent' && user.chats[user.chats.length - 1].read==false">
+              <i class="fas fa-check"></i>
+          </div>
+
+          <div *ngIf="user.chats[user.chats.length - 1].status=='sent' && user.chats[user.chats.length - 1].read">
+              <i class="fas fa-check-double"></i>
+          </div>
+
         </div><hr>
       </div>
     </div>
