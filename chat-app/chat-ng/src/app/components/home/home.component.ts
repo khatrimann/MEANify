@@ -5,8 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription, from } from 'rxjs';
 import { FsService } from 'ngx-fs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { sanitizeUrl } from '@angular/core/src/sanitization/sanitization';
-
+import { ImageCompressService, ResizeOptions, ImageUtilityService, IImage, SourceImage } from 'ng2-image-compress';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -29,6 +28,10 @@ export class HomeComponent implements OnInit {
   fileToUpload: File = null;
   imageurl: any;
   FILE: any;
+  selectedImage: any;
+  processedImages: any = [];
+  showTitle = false;
+  length: number;
 
   constructor(private chatService: ChatService, private userService: UserService, private authService: AuthService, private fsService: FsService, private domSanitizer: DomSanitizer) {
 
@@ -131,5 +134,22 @@ export class HomeComponent implements OnInit {
       this.chatService.sendMessageTo(this.to, this.username, null, this.FILE, type);
     };
     myReader.readAsDataURL(file);
+
+
+
+    const images: Array<IImage> = [];
+
+    ImageCompressService.filesArrayToCompressedImageSource(Array.from(inputValue.files)).then(observableImages => {
+      observableImages.subscribe((image) => {
+        images.push(image);
+      }, (error) => {
+        console.log('Error while converting');
+      }, () => {
+                this.processedImages = images;
+                this.showTitle = true;
+                // console.log()
+      });
+    });
+
   }
 }

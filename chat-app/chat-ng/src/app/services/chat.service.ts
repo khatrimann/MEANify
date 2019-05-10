@@ -24,7 +24,7 @@ export class ChatService {
       this.socket.emit('login', id);
     }
 
-    public sendMessageTo(to, from, message = null, buff = null, type ='image') {
+    public sendMessageTo(to, from, message = null, buff = null, type = 'image') {
       // tslint:disable-next-line:no-non-null-assertion
       if (message != null && buff == null ) {
         this.socket.emit('msg', { message: message, to: to, from: from });

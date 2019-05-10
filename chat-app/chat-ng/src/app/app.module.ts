@@ -6,16 +6,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {NgxFsModule} from 'ngx-fs';
+import { ImageCompressService,ResizeOptions,ImageUtilityService } from 'ng2-image-compress';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { TrustPipe } from './pipes/trust.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    TrustPipe
   ],
   imports: [
     BrowserModule,
@@ -23,10 +27,12 @@ import { HomeComponent } from './components/home/home.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgxFsModule
+    NgxFsModule,
   ],
   providers: [
-    ChatService
+    ChatService,
+    ImageCompressService,
+    ResizeOptions
   ],
   bootstrap: [AppComponent]
 })

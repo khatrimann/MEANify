@@ -7,6 +7,17 @@
       <div *ngFor="let message of messages">
         {{message}}
       </div>
+
+      <div *ngFor="let item of processedImages">
+        <img src="{{item.imageDataUrl}}" height="50" width="70">
+      </div>
+
+      <b *ngIf="showTitle" >Compressed Image List</b>
+      <div *ngFor="let item of processedImages">
+        <img src="{{item.compressedImage.imageDataUrl}}" height="50" width="70">
+      </div>
+
+
       <!-- <img [src]="image" /> -->
       <input [(ngModel)]="to" (click)="sendMessageTo()" />
       <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessageTo()" />
@@ -35,13 +46,13 @@
               <div>
                 <div *ngIf="chats.from==user.username" [ngClass]="chats.read?'read':'unread'" class="box sb2"><div *ngIf="chats.message">{{ chats.message }}</div>
                 <div *ngIf="chats.base64">
-                    <audio *ngIf="chats.audio" controls [src]="chats.base64"></audio>
+                    <audio *ngIf="chats.audio" controls [src]="chats.base64 | trust"></audio>
                     <img *ngIf="chats.image" [src]="chats.base64">
                   </div></div>
                 <div *ngIf="chats.from!=user.username" class="box sb1">
                   <div *ngIf="chats.message">{{ chats.message }}</div>
                   <div *ngIf="chats.base64">
-                    <audio *ngIf="chats.audio" controls [src]="chats.base64"></audio>
+                    <audio *ngIf="chats.audio" controls [src]="chats.base64 | trust"></audio>
                     <img *ngIf="chats.image" [src]="chats.base64">
                   </div>
                 </div>
@@ -59,13 +70,15 @@
               <div class="box sb2">I'm speech bubble</div> -->
 
           </div>
-
+          <!-- user.chats.length - 1 -->
+          <div *ngIf="user.chats.length">
           <div *ngIf="user.chats[user.chats.length - 1].status=='sent' && user.chats[user.chats.length - 1].read==false">
               <i class="fas fa-check"></i>
           </div>
 
           <div *ngIf="user.chats[user.chats.length - 1].status=='sent' && user.chats[user.chats.length - 1].read">
               <i class="fas fa-check-double"></i>
+          </div>
           </div>
 
         </div><hr>
