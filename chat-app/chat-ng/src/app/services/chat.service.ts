@@ -40,9 +40,9 @@ export class ChatService {
 
     public getMessages = () => {
       return Observable.create((observer) => {
-          this.socket.on('pmsg', (message) => {
-            console.log(message);
-              observer.next(message);
+          this.socket.on('pmsg', (messageObject) => {
+            console.log(messageObject);
+              observer.next(messageObject);
           });
       });
     }

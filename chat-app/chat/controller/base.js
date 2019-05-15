@@ -22,7 +22,7 @@ module.exports.IOHandler = (io) => {
             var online = user.online;
             var toUser = user.username;
             if (online) {
-              io.to(data.to).emit('pmsg', data.from + ': ' + data.message);
+              io.to(data.to).emit('pmsg', { to: toUser, from: data.from, message: data.message, status: 'sent', read: false, image: false, audio: false });
               // User.findOneAndUpdate({ socketId: data.to }, { lastMsg: data.message, $push: { chats: { to: toUser, from: data.from, message: data.message } } }, {upsert: true})
               // .then(user => {
               //   console.log(user);
@@ -47,7 +47,7 @@ module.exports.IOHandler = (io) => {
                     user.save();
                   });
                 if (data.message.indexOf('hey') > -1 || data.message.indexOf('hi') > -1 || data.message.indexOf('hello') > -1) {
-                  io.to(user.socketId).emit('pmsg', toUser + ': Hi, I am currently offline');
+                  io.to(user.socketId).emit('pmsg', {from: toUser, to: data.from, message: 'Hi, I am currently offline', status: 'sent', read: false, image: false, audio: false });
                   user.chats.push({from: toUser, to: data.from, message: 'Hi, I am currently offline'});
                   user.save();
                   User.findOne({ socketId: data.to })
@@ -56,7 +56,7 @@ module.exports.IOHandler = (io) => {
                     user.save();
                   });
                 } else if (data.message.indexOf('when') > -1) {
-                  io.to(user.socketId).emit('pmsg', toUser + ': I\'ll text you when i\'ll be online');
+                  io.to(user.socketId).emit('pmsg', {from: toUser, to: data.from, message: 'I\'ll text you when i\'ll be online', status: 'sent', read: false, image: false, audio: false });
                   user.chats.push({from: toUser, to: data.from, message: 'I\'ll text you when i\'ll be online'});
                   user.save();
                   User.findOne({ socketId: data.to })
@@ -65,7 +65,7 @@ module.exports.IOHandler = (io) => {
                     user.save();
                   });
                 } else if (data.message.indexOf('Ok') > -1 || data.message.indexOf('OK') > -1 || data.message.indexOf('Okay') > -1 || data.message.indexOf('OKAY') > -1 || data.message.indexOf('ok') > -1) {
-                  io.to(user.socketId).emit('pmsg', toUser + ': :)');
+                  io.to(user.socketId).emit('pmsg', {from: toUser, to: data.from, message: ':)', status: 'sent', read: false, image: false, audio: false });
                   user.chats.push({from: toUser, to: data.from, message: ':)'});
                   user.save();
                   User.findOne({ socketId: data.to })

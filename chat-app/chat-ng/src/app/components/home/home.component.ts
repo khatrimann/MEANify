@@ -72,8 +72,14 @@ export class HomeComponent implements OnInit {
 
     this.chatSubscription =  this.chatService
     .getMessages()
-    .subscribe((message: string) => {
-      this.messages.push(message);
+    .subscribe((messageObject: any) => {
+      // this.messages.push(message);
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].username === messageObject.to || this.users[i].username === messageObject.from) {
+          console.log('This message is intended from ' + messageObject.from + ' to ' + messageObject.to);
+          this.users[i].chats.push(messageObject);
+        }
+      }
     });
 
     // this.interval = setInterval(() => {
@@ -127,6 +133,11 @@ export class HomeComponent implements OnInit {
   focus(username) {
     console.log(username + '\'s messages');
     this.chatService.readMsg(username);
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].read === false) {
+        this.users[i].read = true;
+      }
+    }
   }
 
   console() {
@@ -149,8 +160,6 @@ export class HomeComponent implements OnInit {
       this.chatService.sendMessageTo(this.to, this.username, null, this.FILE, type);
     };
     myReader.readAsDataURL(file);
-
-
 
     const images: Array<IImage> = [];
 
@@ -180,7 +189,7 @@ export class HomeComponent implements OnInit {
      const span = <HTMLSpanElement>document.getElementsByClassName('close')[0];
      span.onclick = function() {
        modal.style.display = 'none';
-     }
+     };
 
   }
 }
