@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   message: string;
   to: string;
+  touser: string;
   messages: string[] = [];
   users: any[] = [];
   username: string = undefined;
@@ -75,14 +76,21 @@ export class HomeComponent implements OnInit {
       this.messages.push(message);
     });
 
-    this.interval = setInterval(() => {
-      userService.getUsers().subscribe(users => {
-        // this.users = users;
-        this.users = [];
-      this.users.push(...users);
-      console.log(this.users);
-    });
-    }, 10000);
+    // this.interval = setInterval(() => {
+    //   userService.getUsers().subscribe(users => {
+    //     // this.users = users;
+    //     this.users = [];
+    //   this.users.push(...users);
+    //   console.log(this.users);
+    // });
+    // }, 10000);
+
+    userService.getUsers().subscribe(users => {
+      // this.users = users;
+      this.users = [];
+    this.users.push(...users);
+    console.log(this.users);
+  });
   }
 
   sendMessageTo() {
@@ -91,7 +99,14 @@ export class HomeComponent implements OnInit {
       this.messages.push(this.username + ': ' + this.message);
       this.chatService.sendMessageTo(this.to, this.username, this.message);
       console.log(this.to);
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].username === this.touser || this.users[i].username === this.username) {
+          console.log('This message is intended from ' + this.username + ' to ' + this.touser);
+          this.users[i].chats.push({ to: this.touser, from: this.username, message: this.message, status: this.sendMessageTo, read: false, image: false, audio: false });
+        }
+      }
       this.message = '';
+
     }
   }
   ngOnInit() {
@@ -150,6 +165,22 @@ export class HomeComponent implements OnInit {
                 // console.log()
       });
     });
+
+  }
+
+  preview(event) {
+    const modal = <HTMLDivElement>document.getElementById('myModal');
+    console.log(event.srcElement);
+    const modalImg = <HTMLImageElement>document.getElementById('img01');
+
+      modal.style.display = 'block';
+      modalImg.src = event.srcElement.src;
+
+
+     const span = <HTMLSpanElement>document.getElementsByClassName('close')[0];
+     span.onclick = function() {
+       modal.style.display = 'none';
+     }
 
   }
 }
